@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<!-- saved from url=(0037)https://blog.todest.cn/post/934e7461/ -->
+<html lang="zh-CN,en,default"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.file.todest.cn/blog/user/logo.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="./自动健康打卡 _ 亦往沧劫_files/4756cb352ec7f58884fdc0c219ea00dc(1).jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="./自动健康打卡 _ 亦往沧劫_files/4756cb352ec7f58884fdc0c219ea00dc(1).jpeg">
+  <link rel="mask-icon" href="https://cdn.file.todest.cn/blog/user/logo.ico" color="#222">
+  <meta name="msapplication-config" content="//cdn.file.todest.cn/blog/user/logo.ico">
+
+<link rel="stylesheet" href="./自动健康打卡 _ 亦往沧劫_files/main.css">
+
+
+<link rel="stylesheet" href="./自动健康打卡 _ 亦往沧劫_files/font-awesome.min.css">
+  <link rel="stylesheet" href="./自动健康打卡 _ 亦往沧劫_files/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.todest.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="自动健康打卡(逃 建议使用Coding定时构建，强烈不推荐使用国外服务器，包括github action。因当天打卡系统异常造成无法打卡时，需等待打卡系统正常后自行打卡或手动触发构建计划。 本文档以及代码可能会不定时更新，修复和优化，部署成功的能不能在下面留言告诉一下，且留意本文章是否更新，最后更新时间可以看最上方。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自动健康打卡">
+<meta property="og:url" content="https://blog.todest.cn/post/934e7461/index.html">
+<meta property="og:site_name" content="亦往沧劫">
+<meta property="og:description" content="自动健康打卡(逃 建议使用Coding定时构建，强烈不推荐使用国外服务器，包括github action。因当天打卡系统异常造成无法打卡时，需等待打卡系统正常后自行打卡或手动触发构建计划。 本文档以及代码可能会不定时更新，修复和优化，部署成功的能不能在下面留言告诉一下，且留意本文章是否更新，最后更新时间可以看最上方。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.file.todest.cn/blog/pic/20201205164547.png">
+<meta property="og:image" content="https://cdn.file.todest.cn/blog/pic/20201205164816.png">
+<meta property="og:image" content="https://cdn.file.todest.cn/blog/pic/20201205165857.png">
+<meta property="og:image" content="https://cdn.file.todest.cn/blog/pic/20201205170328.png">
+<meta property="og:image" content="https://cdn.file.todest.cn/blog/pic/20201205170919.png">
+<meta property="og:image" content="https://cdn.file.todest.cn/blog/pic/20201205171438.png">
+<meta property="og:image" content="https://cdn.file.todest.cn/blog/pic/20201205171840.png">
+<meta property="og:image" content="https://cdn.file.todest.cn/blog/pic/20201207181947.png">
+<meta property="og:image" content="https://cdn.file.todest.cn/blog/pic/20201207182447.png">
+<meta property="og:image" content="https://cdn.file.todest.cn/blog/pic/20201207182104.png">
+<meta property="article:published_time" content="2020-12-01T03:56:35.000Z">
+<meta property="article:modified_time" content="2021-06-08T03:48:25.589Z">
+<meta property="article:author" content="亦往沧劫">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.file.todest.cn/blog/pic/20201205164547.png">
+
+<link rel="canonical" href="https://blog.todest.cn/post/934e7461/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>自动健康打卡 | 亦往沧劫</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="https://blog.todest.cn/atom.xml" title="亦往沧劫" type="application/atom+xml">
+<style type="text/css">.heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}</style><script src="./自动健康打卡 _ 亦往沧劫_files/tex-mml-chtml.js.下载" defer=""></script><script src="./自动健康打卡 _ 亦往沧劫_files/Valine.min.js.下载"></script><style type="text/css">.CtxtMenu_InfoClose {  top:.2em; right:.2em;}
+.CtxtMenu_InfoContent {  overflow:auto; text-align:left; font-size:80%;  padding:.4em .6em; border:1px inset; margin:1em 0px;  max-height:20em; max-width:30em; background-color:#EEEEEE;  white-space:normal;}
+.CtxtMenu_Info.CtxtMenu_MousePost {outline:none;}
+.CtxtMenu_Info {  position:fixed; left:50%; width:auto; text-align:center;  border:3px outset; padding:1em 2em; background-color:#DDDDDD;  color:black;  cursor:default; font-family:message-box; font-size:120%;  font-style:normal; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 15px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius:15px;               /* Safari and Chrome */  -moz-border-radius:15px;                  /* Firefox */  -khtml-border-radius:15px;                /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */  filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color="gray", Positive="true"); /* IE */}
+</style><style type="text/css">.CtxtMenu_MenuClose {  position:absolute;  cursor:pointer;  display:inline-block;  border:2px solid #AAA;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  font-family: "Courier New", Courier;  font-size:24px;  color:#F0F0F0}
+.CtxtMenu_MenuClose span {  display:block; background-color:#AAA; border:1.5px solid;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  line-height:0;  padding:8px 0 6px     /* may need to be browser-specific */}
+.CtxtMenu_MenuClose:hover {  color:white!important;  border:2px solid #CCC!important}
+.CtxtMenu_MenuClose:hover span {  background-color:#CCC!important}
+.CtxtMenu_MenuClose:hover:focus {  outline:none}
+</style><style type="text/css">.CtxtMenu_Menu {  position:absolute;  background-color:white;  color:black;  width:auto; padding:5px 0px;  border:1px solid #CCCCCC; margin:0; cursor:default;  font: menu; text-align:left; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 5px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius: 5px;             /* Safari and Chrome */  -moz-border-radius: 5px;                /* Firefox */  -khtml-border-radius: 5px;              /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */}
+.CtxtMenu_MenuItem {  padding: 1px 2em;  background:transparent;}
+.CtxtMenu_MenuArrow {  position:absolute; right:.5em; padding-top:.25em; color:#666666;  font-family: null; font-size: .75em}
+.CtxtMenu_MenuActive .CtxtMenu_MenuArrow {color:white}
+.CtxtMenu_MenuArrow.CtxtMenu_RTL {left:.5em; right:auto}
+.CtxtMenu_MenuCheck {  position:absolute; left:.7em;  font-family: null}
+.CtxtMenu_MenuCheck.CtxtMenu_RTL { right:.7em; left:auto }
+.CtxtMenu_MenuRadioCheck {  position:absolute; left: .7em;}
+.CtxtMenu_MenuRadioCheck.CtxtMenu_RTL {  right: .7em; left:auto}
+.CtxtMenu_MenuInputBox {  padding-left: 1em; right:.5em; color:#666666;  font-family: null;}
+.CtxtMenu_MenuInputBox.CtxtMenu_RTL {  left: .1em;}
+.CtxtMenu_MenuComboBox {  left:.1em; padding-bottom:.5em;}
+.CtxtMenu_MenuSlider {  left: .1em;}
+.CtxtMenu_SliderValue {  position:absolute; right:.1em; padding-top:.25em; color:#333333;  font-size: .75em}
+.CtxtMenu_SliderBar {  outline: none; background: #d3d3d3}
+.CtxtMenu_MenuLabel {  padding: 1px 2em 3px 1.33em;  font-style:italic}
+.CtxtMenu_MenuRule {  border-top: 1px solid #DDDDDD;  margin: 4px 3px;}
+.CtxtMenu_MenuDisabled {  color:GrayText}
+.CtxtMenu_MenuActive {  background-color: #606872;  color: white;}
+.CtxtMenu_MenuDisabled:focus {  background-color: #E8E8E8}
+.CtxtMenu_MenuLabel:focus {  background-color: #E8E8E8}
+.CtxtMenu_ContextMenu:focus {  outline:none}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem:focus {  outline:none}
+.CtxtMenu_SelectionMenu {  position:relative; float:left;  border-bottom: none; -webkit-box-shadow:none; -webkit-border-radius:0px; }
+.CtxtMenu_SelectionItem {  padding-right: 1em;}
+.CtxtMenu_Selection {  right: 40%; width:50%; }
+.CtxtMenu_SelectionBox {  padding: 0em; max-height:20em; max-width: none;  background-color:#FFFFFF;}
+.CtxtMenu_SelectionDivider {  clear: both; border-top: 2px solid #000000;}
+.CtxtMenu_Menu .CtxtMenu_MenuClose {  top:-10px; left:-10px}
+</style><style id="MJX-CHTML-styles">
+mjx-container[jax="CHTML"] {
+  line-height: 0;
+}
+
+mjx-container [space="1"] {
+  margin-left: .111em;
+}
+
+mjx-container [space="2"] {
+  margin-left: .167em;
+}
+
+mjx-container [space="3"] {
+  margin-left: .222em;
+}
+
+mjx-container [space="4"] {
+  margin-left: .278em;
+}
+
+mjx-container [space="5"] {
+  margin-left: .333em;
+}
+
+mjx-container [rspace="1"] {
+  margin-right: .111em;
+}
+
+mjx-container [rspace="2"] {
+  margin-right: .167em;
+}
+
+mjx-container [rspace="3"] {
+  margin-right: .222em;
+}
+
+mjx-container [rspace="4"] {
+  margin-right: .278em;
+}
+
+mjx-container [rspace="5"] {
+  margin-right: .333em;
+}
+
+mjx-container [size="s"] {
+  font-size: 70.7%;
+}
+
+mjx-container [size="ss"] {
+  font-size: 50%;
+}
+
+mjx-container [size="Tn"] {
+  font-size: 60%;
+}
+
+mjx-container [size="sm"] {
+  font-size: 85%;
+}
+
+mjx-container [size="lg"] {
+  font-size: 120%;
+}
+
+mjx-container [size="Lg"] {
+  font-size: 144%;
+}
+
+mjx-container [size="LG"] {
+  font-size: 173%;
+}
+
+mjx-container [size="hg"] {
+  font-size: 207%;
+}
+
+mjx-container [size="HG"] {
+  font-size: 249%;
+}
+
+mjx-container [width="full"] {
+  width: 100%;
+}
+
+mjx-box {
+  display: inline-block;
+}
+
+mjx-block {
+  display: block;
+}
+
+mjx-itable {
+  display: inline-table;
+}
+
+mjx-row {
+  display: table-row;
+}
+
+mjx-row > * {
+  display: table-cell;
+}
+
+mjx-mtext {
+  display: inline-block;
+}
+
+mjx-mstyle {
+  display: inline-block;
+}
+
+mjx-merror {
+  display: inline-block;
+  color: red;
+  background-color: yellow;
+}
+
+mjx-mphantom {
+  visibility: hidden;
+}
+
+_::-webkit-full-page-media, _:future, :root mjx-container {
+  will-change: opacity;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-c::before {
+  display: block;
+  width: 0;
+}
+
+.MJX-TEX {
+  font-family: MJXZERO, MJXTEX;
+}
+
+.TEX-B {
+  font-family: MJXZERO, MJXTEX-B;
+}
+
+.TEX-I {
+  font-family: MJXZERO, MJXTEX-I;
+}
+
+.TEX-MI {
+  font-family: MJXZERO, MJXTEX-MI;
+}
+
+.TEX-BI {
+  font-family: MJXZERO, MJXTEX-BI;
+}
+
+.TEX-S1 {
+  font-family: MJXZERO, MJXTEX-S1;
+}
+
+.TEX-S2 {
+  font-family: MJXZERO, MJXTEX-S2;
+}
+
+.TEX-S3 {
+  font-family: MJXZERO, MJXTEX-S3;
+}
+
+.TEX-S4 {
+  font-family: MJXZERO, MJXTEX-S4;
+}
+
+.TEX-A {
+  font-family: MJXZERO, MJXTEX-A;
+}
+
+.TEX-C {
+  font-family: MJXZERO, MJXTEX-C;
+}
+
+.TEX-CB {
+  font-family: MJXZERO, MJXTEX-CB;
+}
+
+.TEX-FR {
+  font-family: MJXZERO, MJXTEX-FR;
+}
+
+.TEX-FRB {
+  font-family: MJXZERO, MJXTEX-FRB;
+}
+
+.TEX-SS {
+  font-family: MJXZERO, MJXTEX-SS;
+}
+
+.TEX-SSB {
+  font-family: MJXZERO, MJXTEX-SSB;
+}
+
+.TEX-SSI {
+  font-family: MJXZERO, MJXTEX-SSI;
+}
+
+.TEX-SC {
+  font-family: MJXZERO, MJXTEX-SC;
+}
+
+.TEX-T {
+  font-family: MJXZERO, MJXTEX-T;
+}
+
+.TEX-V {
+  font-family: MJXZERO, MJXTEX-V;
+}
+
+.TEX-VB {
+  font-family: MJXZERO, MJXTEX-VB;
+}
+
+mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
+  font-family: MJXZERO, MJXTEX-S1, MJXTEX-S4, MJXTEX, MJXTEX-A ! important;
+}
+
+@font-face /* 0 */ {
+  font-family: MJXZERO;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Zero.woff") format("woff");
+}
+
+@font-face /* 1 */ {
+  font-family: MJXTEX;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Main-Regular.woff") format("woff");
+}
+
+@font-face /* 2 */ {
+  font-family: MJXTEX-B;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Main-Bold.woff") format("woff");
+}
+
+@font-face /* 3 */ {
+  font-family: MJXTEX-I;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Math-Italic.woff") format("woff");
+}
+
+@font-face /* 4 */ {
+  font-family: MJXTEX-MI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Main-Italic.woff") format("woff");
+}
+
+@font-face /* 5 */ {
+  font-family: MJXTEX-BI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Math-BoldItalic.woff") format("woff");
+}
+
+@font-face /* 6 */ {
+  font-family: MJXTEX-S1;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size1-Regular.woff") format("woff");
+}
+
+@font-face /* 7 */ {
+  font-family: MJXTEX-S2;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size2-Regular.woff") format("woff");
+}
+
+@font-face /* 8 */ {
+  font-family: MJXTEX-S3;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size3-Regular.woff") format("woff");
+}
+
+@font-face /* 9 */ {
+  font-family: MJXTEX-S4;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size4-Regular.woff") format("woff");
+}
+
+@font-face /* 10 */ {
+  font-family: MJXTEX-A;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_AMS-Regular.woff") format("woff");
+}
+
+@font-face /* 11 */ {
+  font-family: MJXTEX-C;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Regular.woff") format("woff");
+}
+
+@font-face /* 12 */ {
+  font-family: MJXTEX-CB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Bold.woff") format("woff");
+}
+
+@font-face /* 13 */ {
+  font-family: MJXTEX-FR;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Regular.woff") format("woff");
+}
+
+@font-face /* 14 */ {
+  font-family: MJXTEX-FRB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Bold.woff") format("woff");
+}
+
+@font-face /* 15 */ {
+  font-family: MJXTEX-SS;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Regular.woff") format("woff");
+}
+
+@font-face /* 16 */ {
+  font-family: MJXTEX-SSB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Bold.woff") format("woff");
+}
+
+@font-face /* 17 */ {
+  font-family: MJXTEX-SSI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Italic.woff") format("woff");
+}
+
+@font-face /* 18 */ {
+  font-family: MJXTEX-SC;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Script-Regular.woff") format("woff");
+}
+
+@font-face /* 19 */ {
+  font-family: MJXTEX-T;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Typewriter-Regular.woff") format("woff");
+}
+
+@font-face /* 20 */ {
+  font-family: MJXTEX-V;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Regular.woff") format("woff");
+}
+
+@font-face /* 21 */ {
+  font-family: MJXTEX-VB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Bold.woff") format("woff");
+}
+</style><style type="text/css">.v[data-class=v]{font-size:16px;text-align:left}.v[data-class=v] *{-webkit-box-sizing:border-box;box-sizing:border-box;line-height:1.75}.v[data-class=v] .status-bar,.v[data-class=v] .veditor,.v[data-class=v] .vinput,.v[data-class=v] p,.v[data-class=v] pre code{color:#555}.v[data-class=v] .vsys,.v[data-class=v] .vtime{color:#b3b3b3}.v[data-class=v] .text-right{text-align:right}.v[data-class=v] .text-center{text-align:center}.v[data-class=v] img{max-width:100%;border:none}.v[data-class=v] hr{margin:.825em 0;border-color:#f6f6f6;border-style:dashed}.v[data-class=v].hide-avatar .vimg{display:none}.v[data-class=v] a{position:relative;cursor:pointer;color:#1abc9c;text-decoration:none;display:inline-block}.v[data-class=v] a:hover{color:#d7191a}.v[data-class=v] code,.v[data-class=v] pre{background-color:#f8f8f8;padding:.2em .4em;border-radius:3px;font-size:85%;margin:0}.v[data-class=v] pre{padding:10px;overflow:auto;line-height:1.45}.v[data-class=v] pre code{padding:0;background:transparent;white-space:pre-wrap;word-break:keep-all}.v[data-class=v] blockquote{color:#666;margin:.5em 0;padding:0 0 0 1em;border-left:8px solid hsla(0,0%,93%,.5)}.v[data-class=v] .vinput{border:none;resize:none;outline:none;padding:10px 5px;max-width:100%;font-size:.775em}.v[data-class=v] input[type=checkbox],.v[data-class=v] input[type=radio]{display:inline-block;vertical-align:middle;margin-top:-2px}.v[data-class=v] .vicon{cursor:pointer;display:inline-block;overflow:hidden;fill:#555;vertical-align:middle}.v[data-class=v] .vicon+.vicon{margin-left:10px}.v[data-class=v] .vicon.actived{fill:#66b1ff}.v[data-class=v] .vrow{font-size:0;padding:10px 0}.v[data-class=v] .vrow .vcol{display:inline-block;vertical-align:middle;font-size:14px}.v[data-class=v] .vrow .vcol.vcol-20{width:20%}.v[data-class=v] .vrow .vcol.vcol-30{width:30%}.v[data-class=v] .vrow .vcol.vcol-40{width:40%}.v[data-class=v] .vrow .vcol.vcol-50{width:50%}.v[data-class=v] .vrow .vcol.vcol-60{width:60%}.v[data-class=v] .vrow .vcol.vcol-70{width:70%}.v[data-class=v] .vrow .vcol.vcol-80{width:80%}.v[data-class=v] .vrow .vcol.vctrl{font-size:12px}.v[data-class=v] .emoji,.v[data-class=v] .vemoji{max-width:25px;vertical-align:middle;margin:0 1px;display:inline-block}.v[data-class=v] .vwrap{border:1px solid #f0f0f0;border-radius:4px;margin-bottom:10px;overflow:hidden;position:relative;padding:10px}.v[data-class=v] .vwrap input{background:transparent}.v[data-class=v] .vwrap .vedit{position:relative;padding-top:10px}.v[data-class=v] .vwrap .cancel-reply-btn{position:absolute;right:5px;top:5px;cursor:pointer}.v[data-class=v] .vwrap .vemojis{display:none;font-size:18px;max-height:145px;overflow:auto;padding-bottom:10px;-webkit-box-shadow:0 0 1px #f0f0f0;box-shadow:0 0 1px #f0f0f0}.v[data-class=v] .vwrap .vemojis i{font-style:normal;padding-top:7px;width:36px;cursor:pointer;text-align:center;display:inline-block;vertical-align:middle}.v[data-class=v] .vwrap .vpreview{padding:7px;-webkit-box-shadow:0 0 1px #f0f0f0;box-shadow:0 0 1px #f0f0f0}.v[data-class=v] .vwrap .vheader .vinput{width:33.33%;border-bottom:1px dashed #dedede}.v[data-class=v] .vwrap .vheader.item2 .vinput{width:50%}.v[data-class=v] .vwrap .vheader.item1 .vinput{width:100%}.v[data-class=v] .vwrap .vheader .vinput:focus{border-bottom-color:#eb5055}@media screen and (max-width:520px){.v[data-class=v] .vwrap .vheader.item2 .vinput,.v[data-class=v] .vwrap .vheader .vinput{width:100%}}.v[data-class=v] .vpower{color:#999;font-size:.75em;padding:.5em 0}.v[data-class=v] .vpower a{font-size:.75em}.v[data-class=v] .vcount{padding:5px;font-weight:600;font-size:1.25em}.v[data-class=v] ol,.v[data-class=v] ul{padding:0;margin-left:1.25em}.v[data-class=v] .txt-center{text-align:center}.v[data-class=v] .txt-right{text-align:right}.v[data-class=v] .pd5{padding:5px}.v[data-class=v] .pd10{padding:10px}.v[data-class=v] .veditor{width:100%;min-height:8.75em;font-size:.875em;background:transparent;resize:vertical;-webkit-transition:all .25s ease;transition:all .25s ease}.v[data-class=v] .vbtn{-webkit-transition-duration:.4s;transition-duration:.4s;text-align:center;color:#555;border:1px solid #ededed;border-radius:.3em;display:inline-block;background:transparent;margin-bottom:0;font-weight:400;vertical-align:middle;-ms-touch-action:manipulation;touch-action:manipulation;cursor:pointer;white-space:nowrap;padding:.5em 1.25em;font-size:.875em;line-height:1.42857143;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;outline:none}.v[data-class=v] .vbtn+.vbtn{margin-left:1.25em}.v[data-class=v] .vbtn:active,.v[data-class=v] .vbtn:hover{color:#3090e4;border-color:#3090e4}.v[data-class=v] .vbtn:disabled{border-color:#e1e1e1;color:#e1e1e1;background-color:#fdfafa;cursor:not-allowed}.v[data-class=v] .vempty{padding:1.25em;text-align:center;color:#555;overflow:auto}.v[data-class=v] .vsys{display:inline-block;padding:.2em .5em;font-size:.75em;border-radius:.2em;margin-right:.3em}@media screen and (max-width:520px){.v[data-class=v] .vsys{display:none}}.v[data-class=v] .vcards{width:100%}.v[data-class=v] .vcards .vcard{padding-top:1.25em;position:relative;display:block}.v[data-class=v] .vcards .vcard:after{content:"";clear:both;display:block}.v[data-class=v] .vcards .vcard .vimg{width:3.125em;height:3.125em;float:left;border-radius:50%;margin-right:.7525em;border:1px solid #f5f5f5;padding:.125em}@media screen and (max-width:720px){.v[data-class=v] .vcards .vcard .vimg{width:2.5em;height:2.5em}}.v[data-class=v] .vcards .vcard .vhead{line-height:1.5;margin-top:0}.v[data-class=v] .vcards .vcard .vhead .vnick{position:relative;font-size:.875em;font-weight:500;margin-right:.875em;cursor:pointer;text-decoration:none;display:inline-block}.v[data-class=v] .vcards .vcard .vhead .vnick:hover{color:#d7191a}.v[data-class=v] .vcards .vcard .vh{overflow:hidden;padding-bottom:.5em;border-bottom:1px dashed #f5f5f5}.v[data-class=v] .vcards .vcard .vh .vtime{font-size:.75em;margin-right:.875em}.v[data-class=v] .vcards .vcard .vh .vmeta{line-height:1;position:relative}.v[data-class=v] .vcards .vcard .vh .vmeta .vat{font-size:.8125em;color:#ef2f11;cursor:pointer;float:right}.v[data-class=v] .vcards .vcard:last-child .vh{border-bottom:none}.v[data-class=v] .vcards .vcard .vcontent{word-wrap:break-word;word-break:break-all;font-size:.875em;line-height:2;position:relative;margin-bottom:.75em;padding-top:.625em}.v[data-class=v] .vcards .vcard .vcontent.expand{cursor:pointer;max-height:8em;overflow:hidden}.v[data-class=v] .vcards .vcard .vcontent.expand:before{display:block;content:"";position:absolute;width:100%;left:0;top:0;bottom:3.15em;background:-webkit-gradient(linear,left top,left bottom,from(hsla(0,0%,100%,0)),to(hsla(0,0%,100%,.9)));background:linear-gradient(180deg,hsla(0,0%,100%,0),hsla(0,0%,100%,.9));z-index:999}.v[data-class=v] .vcards .vcard .vcontent.expand:after{display:block;content:attr(data-expand);text-align:center;color:#828586;position:absolute;width:100%;height:3.15em;line-height:3.15em;left:0;bottom:0;z-index:999;background:hsla(0,0%,100%,.9)}.v[data-class=v] .vcards .vcard .vquote{padding-left:1em;border-left:1px dashed hsla(0,0%,93%,.5)}.v[data-class=v] .vcards .vcard .vquote .vimg{width:2.225em;height:2.225em}.v[data-class=v] .vpage .vmore{margin:1em 0}.v[data-class=v] .clear{content:"";display:block;clear:both}@-webkit-keyframes spin{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@keyframes spin{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@-webkit-keyframes pulse{50%{background:#dcdcdc}}@keyframes pulse{50%{background:#dcdcdc}}.v[data-class=v] .vspinner{width:22px;height:22px;display:inline-block;border:6px double #a0a0a0;border-top-color:transparent;border-bottom-color:transparent;border-radius:50%;-webkit-animation:spin 1s infinite linear;animation:spin 1s infinite linear;position:relative;vertical-align:middle;margin:0 5px}.dark .v[data-class=v] .status-bar,.dark .v[data-class=v] .veditor,.dark .v[data-class=v] .vinput,.dark .v[data-class=v] p,.dark .v[data-class=v] pre code,.night .v[data-class=v] .status-bar,.night .v[data-class=v] .veditor,.night .v[data-class=v] .vinput,.night .v[data-class=v] p,.night .v[data-class=v] pre code,.theme__dark .v[data-class=v] .status-bar,.theme__dark .v[data-class=v] .veditor,.theme__dark .v[data-class=v] .vinput,.theme__dark .v[data-class=v] p,.theme__dark .v[data-class=v] pre code,[data-theme=dark] .v[data-class=v] .status-bar,[data-theme=dark] .v[data-class=v] .veditor,[data-theme=dark] .v[data-class=v] .vinput,[data-theme=dark] .v[data-class=v] p,[data-theme=dark] .v[data-class=v] pre code{color:#b2b2b5}.dark .v[data-class=v] .vsys,.dark .v[data-class=v] .vtime,.night .v[data-class=v] .vsys,.night .v[data-class=v] .vtime,.theme__dark .v[data-class=v] .vsys,.theme__dark .v[data-class=v] .vtime,[data-theme=dark] .v[data-class=v] .vsys,[data-theme=dark] .v[data-class=v] .vtime{color:#929298}.dark .v[data-class=v] code,.dark .v[data-class=v] pre,.dark .v[data-class=v] pre code,.night .v[data-class=v] code,.night .v[data-class=v] pre,.night .v[data-class=v] pre code,.theme__dark .v[data-class=v] code,.theme__dark .v[data-class=v] pre,.theme__dark .v[data-class=v] pre code,[data-theme=dark] .v[data-class=v] code,[data-theme=dark] .v[data-class=v] pre,[data-theme=dark] .v[data-class=v] pre code{color:#929298;background-color:#151414}.dark .v[data-class=v] .vwrap,.night .v[data-class=v] .vwrap,.theme__dark .v[data-class=v] .vwrap,[data-theme=dark] .v[data-class=v] .vwrap{border-color:#b2b2b5}.dark .v[data-class=v] .vicon,.night .v[data-class=v] .vicon,.theme__dark .v[data-class=v] .vicon,[data-theme=dark] .v[data-class=v] .vicon{fill:#b2b2b5}.dark .v[data-class=v] .vicon.actived,.night .v[data-class=v] .vicon.actived,.theme__dark .v[data-class=v] .vicon.actived,[data-theme=dark] .v[data-class=v] .vicon.actived{fill:#66b1ff}.dark .v[data-class=v] .vbtn,.night .v[data-class=v] .vbtn,.theme__dark .v[data-class=v] .vbtn,[data-theme=dark] .v[data-class=v] .vbtn{color:#b2b2b5;border-color:#b2b2b5}.dark .v[data-class=v] .vbtn:hover,.night .v[data-class=v] .vbtn:hover,.theme__dark .v[data-class=v] .vbtn:hover,[data-theme=dark] .v[data-class=v] .vbtn:hover{color:#66b1ff;border-color:#66b1ff}.dark .v[data-class=v] a:hover,.night .v[data-class=v] a:hover,.theme__dark .v[data-class=v] a:hover,[data-theme=dark] .v[data-class=v] a:hover{color:#d7191a}.dark .v[data-class=v] .vcards .vcard .vcontent.expand:before,.night .v[data-class=v] .vcards .vcard .vcontent.expand:before,.theme__dark .v[data-class=v] .vcards .vcard .vcontent.expand:before,[data-theme=dark] .v[data-class=v] .vcards .vcard .vcontent.expand:before{background:-webkit-gradient(linear,left top,left bottom,from(rgba(0,0,0,.3)),to(rgba(0,0,0,.7)));background:linear-gradient(180deg,rgba(0,0,0,.3),rgba(0,0,0,.7))}.dark .v[data-class=v] .vcards .vcard .vcontent.expand:after,.night .v[data-class=v] .vcards .vcard .vcontent.expand:after,.theme__dark .v[data-class=v] .vcards .vcard .vcontent.expand:after,[data-theme=dark] .v[data-class=v] .vcards .vcard .vcontent.expand:after{background:rgba(0,0,0,.7)}@media (prefers-color-scheme:dark){.v[data-class=v] .status-bar,.v[data-class=v] .veditor,.v[data-class=v] .vinput,.v[data-class=v] p,.v[data-class=v] pre code{color:#b2b2b5}.v[data-class=v] .vsys,.v[data-class=v] .vtime{color:#929298}.v[data-class=v] code,.v[data-class=v] pre,.v[data-class=v] pre code{color:#929298;background-color:#151414}.v[data-class=v] .vwrap{border-color:#b2b2b5}.v[data-class=v] .vicon{fill:#b2b2b5}.v[data-class=v] .vicon.actived{fill:#66b1ff}.v[data-class=v] .vbtn{color:#b2b2b5;border-color:#b2b2b5}.v[data-class=v] .vbtn:hover{color:#66b1ff;border-color:#66b1ff}.v[data-class=v] a:hover{color:#d7191a}.v[data-class=v] .vcards .vcard .vcontent.expand:before{background:-webkit-gradient(linear,left top,left bottom,from(rgba(0,0,0,.3)),to(rgba(0,0,0,.7)));background:linear-gradient(180deg,rgba(0,0,0,.3),rgba(0,0,0,.7))}.v[data-class=v] .vcards .vcard .vcontent.expand:after{background:rgba(0,0,0,.7)}}</style></head><remove-web-limits-iqxin id="rwl-iqxin" class="rwl-exempt" style="position: fixed; top: 10px; left: 0px;"><qxinbutton type="qxinbutton" id="rwl-setbtn"> set </qxinbutton> <lalala style="cursor:move; font-size:12px;">限制解除</lalala> <input type="checkbox" name="" id="black_node"><style type="text/css">#rwl-iqxin{position:fixed;transform:translate(-95px,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin #rwl-setbtn{margin: 0 4px 0 0;padding: 0 0 0 4px;border: none;border-radius: 2px;cursor: pointer;background: #fff;color: #000;} </style></remove-web-limits-iqxin>
+
+<body itemscope="" itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="https://blog.todest.cn/" class="brand" rel="start" style="opacity: 1;">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title" style="opacity: 1; top: 0px;">亦往沧劫</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description" style="opacity: 1; top: 0px;"></p><p id="hitokoto">你眼中的星海灿烂 是我不曾见过的世外桃源</p><p></p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home" style="opacity: 1; transform: translateY(0px);">
+
+    <a href="https://blog.todest.cn/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives" style="opacity: 1; transform: translateY(0px);">
+
+    <a href="https://blog.todest.cn/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">53</span></a>
+
+  </li>
+        <li class="menu-item menu-item-about" style="opacity: 1; transform: translateY(0px);">
+
+    <a href="https://blog.todest.cn/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags" style="opacity: 1; transform: translateY(0px);">
+
+    <a href="https://blog.todest.cn/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">58</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories" style="opacity: 1; transform: translateY(0px);">
+
+    <a href="https://blog.todest.cn/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">20</span></a>
+
+  </li>
+        <li class="menu-item menu-item-相册" style="opacity: 1; transform: translateY(0px);">
+
+    <a href="https://blog.todest.cn/photo/" rel="section"><i class="fa fa-fw fa-photo"></i>相册</a>
+
+  </li>
+        <li class="menu-item menu-item-链接" style="opacity: 1; transform: translateY(0px);">
+
+    <a href="https://blog.todest.cn/links/" rel="section"><i class="fa fa-fw fa-link"></i>链接</a>
+
+  </li>
+        <li class="menu-item menu-item-留言" style="opacity: 1; transform: translateY(0px);">
+
+    <a href="https://blog.todest.cn/bbs/" rel="section"><i class="fa fa-fw fa-comments"></i>留言</a>
+
+  </li>
+      <li class="menu-item menu-item-search" style="opacity: 1; transform: translateY(0px);">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" placeholder="搜索..." spellcheck="false" type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"><div id="no-result"><i class="fa fa-search fa-5x"></i></div></div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top back-to-top-on">
+    <i class="fa fa-arrow-up"></i>
+    <span>73%</span>
+  </div>
+
+  <a href="https://github.com/yourname" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN" style="opacity: 1; display: block;">
+    <link itemprop="mainEntityOfPage" href="https://blog.todest.cn/post/934e7461/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/4756cb352ec7f58884fdc0c219ea00dc?s=80">
+      <meta itemprop="name" content="亦往沧劫">
+      <meta itemprop="description" content="我不知道你在这儿&lt;br/&gt;知道的话我会常来看你的">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="亦往沧劫">
+    </span>
+      <header class="post-header" style="opacity: 1; display: block; transform: translateY(0px);">
+        <h1 class="post-title" itemprop="name headline">
+          自动健康打卡
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-12-01 11:56:35" itemprop="dateCreated datePublished" datetime="2020-12-01T11:56:35+08:00">2020-12-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-08 11:48:25" itemprop="dateModified" datetime="2021-06-08T11:48:25+08:00">2021-06-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="https://blog.todest.cn/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="https://blog.todest.cn/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: inline;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv">1438</span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="https://blog.todest.cn/post/934e7461/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/post/934e7461/" itemprop="commentCount">22</span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>14k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>13 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody" style="opacity: 1; display: block; transform: translateY(0px);">
+
+      
+        <p>自动健康打卡(逃</p>
+<p>建议使用Coding定时构建，强烈不推荐使用国外服务器，包括github action。<br><strong>因当天打卡系统异常造成无法打卡时，需等待打卡系统正常后自行打卡或手动触发构建计划。</strong></p>
+<p><strong>本文档以及代码可能会不定时更新，修复和优化，部署成功的能不能在下面留言告诉一下，且留意本文章是否更新，最后更新时间可以看最上方。</strong><br><a id="more"></a></p>
+<h1 id="配置文件"><a href="https://blog.todest.cn/post/934e7461/#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6" class="headerlink" title="配置文件"></a>配置文件</h1><p>注意将config.ini配置项进行修改，申请AK和SK教程见后文。<br></p><div class="highlight-container"><figure class="highlight ini"><figcaption><span>config.ini</span></figcaption><div class="table-container"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Basic]</span></span><br><span class="line"><span class="comment">;现居住地 1: 二七区; 2:学校</span></span><br><span class="line"><span class="attr">LOCAL_ADDR</span> = <span class="number">2</span></span><br><span class="line"><span class="comment">;是否修改IP地址</span></span><br><span class="line"><span class="attr">CHANGE_ADDR</span> = <span class="literal">True</span></span><br><span class="line"><span class="comment">;自定义IP地址</span></span><br><span class="line"><span class="attr">IP_ADDR</span> = <span class="number">223.90</span>.<span class="number">40.4</span></span><br><span class="line"></span><br><span class="line"><span class="section">[API]</span></span><br><span class="line"><span class="comment">;百度智能云 文字识别OCR AK</span></span><br><span class="line"><span class="attr">API_KEY</span> = your_api_key</span><br><span class="line"><span class="comment">;百度智能云 文字识别OCR SK</span></span><br><span class="line"><span class="attr">SECRET_KEY</span> = your_secret_key</span><br><span class="line"></span><br><span class="line"><span class="section">[User]</span></span><br><span class="line"><span class="comment">;昵称: ['账号', '密码', '监护人', '监护人联系电话', '户籍地']</span></span><br><span class="line">sample_user: ['username', 'password', 'XXX', 'XXXXXXXXXXX', '河南省焦作市']</span><br><span class="line"></span><br></pre></td></tr></tbody></table></div></figure><div class="copy-btn"><i class="fa fa-clipboard"></i></div></div><br>添加用户信息，账号密码为<a target="_blank" rel="noopener" href="https://uia.hpu.edu.cn/">统一认证</a>账号密码。<br>如需多用户，可在<code>[User]</code>下按示例添加新行，注意都为英文符号，昵称随便起，可以为中文。<p></p>
+<p>上述AK以及SK需前往<a target="_blank" rel="noopener" href="https://console.bce.baidu.com/ai/#/ai/ocr/app/list">百度智能云</a>申请文字识别OCR API。<br>点击创建应用，依次填写应用名称，文字识别包名为不需要，应用归属为个人，应用描述后，点击立即创建，返回应用列表，即可得到API Key和Secret Key。</p>
+<h1 id="完整代码"><a href="https://blog.todest.cn/post/934e7461/#%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81" class="headerlink" title="完整代码"></a>完整代码</h1><p>以下是完整代码main.py，无需更改，按之后步骤要求进行上传。</p>
+<div class="highlight-container"><figure class="highlight py"><figcaption><span>main.py</span></figcaption><div class="table-container"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""自动健康打卡"""</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> absolute_import</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> ast</span><br><span class="line"><span class="keyword">import</span> configparser</span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">from</span> retrying <span class="keyword">import</span> retry</span><br><span class="line"></span><br><span class="line"><span class="comment"># 固定链接，不建议修改</span></span><br><span class="line">URL_MAP = {</span><br><span class="line">    <span class="string">'HOST'</span>: <span class="string">'https://ehall.hpu.edu.cn/infoplus/form/XSMRJKSB/start'</span>,</span><br><span class="line">    <span class="string">'START'</span>: <span class="string">'https://ehall.hpu.edu.cn/infoplus/interface/start'</span>,</span><br><span class="line">    <span class="string">'ALIVE'</span>: <span class="string">'https://ehall.hpu.edu.cn/infoplus/alive'</span>,</span><br><span class="line">    <span class="string">'CAPTCHA'</span>: <span class="string">'https://uia.hpu.edu.cn/sso/apis/v2/open/captcha?date='</span>,</span><br><span class="line">    <span class="string">'LOGIN'</span>: <span class="string">'https://uia.hpu.edu.cn/cas/login'</span>,</span><br><span class="line">    <span class="string">'RENDER'</span>: <span class="string">'https://ehall.hpu.edu.cn/infoplus/interface/render'</span>,</span><br><span class="line">    <span class="string">'PROCESS'</span>: <span class="string">'https://ehall.hpu.edu.cn/infoplus/interface/instance/[id]/progress'</span>,</span><br><span class="line">    <span class="string">'NEXTSTEP'</span>: <span class="string">'https://ehall.hpu.edu.cn/infoplus/interface/listNextStepsUsers'</span>,</span><br><span class="line">    <span class="string">'DOACTION'</span>: <span class="string">'https://ehall.hpu.edu.cn/infoplus/interface/doAction'</span>,</span><br><span class="line">    <span class="string">'CHECK'</span>: <span class="string">'https://ehall.hpu.edu.cn/taskcenter/api/me/processes/done?limit=1&amp;start=0'</span>,</span><br><span class="line">    <span class="string">'API'</span>: <span class="string">'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&amp;client_id=[ak]&amp;client_secret=[sk]'</span>,</span><br><span class="line">    <span class="string">'REQUEST_URL'</span>: <span class="string">'https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic'</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment"># 请求头，可以按需更改</span></span><br><span class="line">HEADERS = {</span><br><span class="line">    <span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) '</span></span><br><span class="line">                  <span class="string">'Chrome/78.0.3904.108 Safari/537.36 QIHU 360EE'</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ReadConfig</span>:</span></span><br><span class="line">    <span class="string">"""读取配置文件类"""</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, filename</span>):</span></span><br><span class="line">        <span class="string">"""配置文件读取初始化"""</span></span><br><span class="line">        self.config = configparser.ConfigParser()</span><br><span class="line">        self.config[<span class="string">'Basic'</span>] = {</span><br><span class="line">            <span class="string">'CHANGE_DATA'</span>: <span class="literal">True</span>,</span><br><span class="line">            <span class="string">'CHANGE_ADDR'</span>: <span class="literal">True</span>,</span><br><span class="line">            <span class="string">'IP_ADDR'</span>: <span class="string">'223.90.40.4'</span></span><br><span class="line">        }</span><br><span class="line">        self.config.read(filename, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_basic</span>(<span class="params">self, param</span>):</span></span><br><span class="line">        <span class="string">"""获取Basic配置"""</span></span><br><span class="line">        value = self.config.get(<span class="string">'Basic'</span>, param)</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_api</span>(<span class="params">self, param</span>):</span></span><br><span class="line">        <span class="string">"""获取API配置"""</span></span><br><span class="line">        value = self.config.get(<span class="string">'API'</span>, param)</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_user</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="string">"""获取User配置"""</span></span><br><span class="line">        value = self.config.items(<span class="string">'User'</span>)</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bot</span>:</span></span><br><span class="line">    <span class="string">"""自动健康打卡类"""</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, config_file</span>):</span></span><br><span class="line">        <span class="string">"""打卡初始化"""</span></span><br><span class="line">        logging.basicConfig(level=logging.INFO, format=<span class="string">'%(asctime)s - %(name)s - %(levelname)s - %(message)s'</span>)</span><br><span class="line">        self.logger = logging.getLogger(<span class="string">'AutoReport'</span>)</span><br><span class="line">        self.logger.info(<span class="string">'程序启动中...'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 读取配置文件</span></span><br><span class="line">        self.data = ReadConfig(config_file)</span><br><span class="line">        self.addr = self.data.get_basic(<span class="string">'LOCAL_ADDR'</span>)</span><br><span class="line">        self.chaddr = self.data.get_basic(<span class="string">'CHANGE_ADDR'</span>)</span><br><span class="line">        self.ipaddr = self.data.get_basic(<span class="string">'IP_ADDR'</span>)</span><br><span class="line"></span><br><span class="line">        self.api_key = self.data.get_api(<span class="string">'API_KEY'</span>)</span><br><span class="line">        self.secret_key = self.data.get_api(<span class="string">'SECRET_KEY'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 登录并打卡</span></span><br><span class="line">        <span class="keyword">for</span> user <span class="keyword">in</span> self.data.get_user():</span><br><span class="line">            self.sessions = requests.session()</span><br><span class="line">            self.login(user)</span><br><span class="line">            self.post(user)</span><br><span class="line">            self.sessions.close()</span><br><span class="line"></span><br><span class="line"><span class="meta">    @retry(stop_max_attempt_number=3)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">login</span>(<span class="params">self, user</span>):</span></span><br><span class="line">        <span class="string">"""登录"""</span></span><br><span class="line">        self.logger.info(<span class="string">'%s开始登录中...'</span>, user[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 登录页面</span></span><br><span class="line">        req = self.sessions.get(URL_MAP[<span class="string">'HOST'</span>], headers=HEADERS, timeout=<span class="number">5</span>)</span><br><span class="line">        req = self.sessions.get(req.url, headers=HEADERS, timeout=<span class="number">5</span>)</span><br><span class="line">        soup = BeautifulSoup(req.content, features=<span class="string">"html.parser"</span>)</span><br><span class="line">        form = soup.find_all(<span class="string">'input'</span>, class_=<span class="string">'for-form'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 验证码获取</span></span><br><span class="line">        captcha = URL_MAP[<span class="string">'CAPTCHA'</span>] + str(int(round(time.time() * <span class="number">1000</span>)))</span><br><span class="line">        req = self.sessions.get(captcha, headers=HEADERS, timeout=<span class="number">5</span>)</span><br><span class="line">        img = ast.literal_eval(req.content.decode(<span class="string">'utf-8'</span>))[<span class="string">'img'</span>]</span><br><span class="line">        self.logger.info(<span class="string">'验证码获取成功!'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 验证码识别</span></span><br><span class="line">        api = URL_MAP[<span class="string">'API'</span>].replace(<span class="string">'[ak]'</span>, self.api_key).replace(<span class="string">'[sk]'</span>, self.secret_key)</span><br><span class="line">        response = requests.get(api)</span><br><span class="line">        access_token = response.json()[<span class="string">'access_token'</span>]</span><br><span class="line">        request_url = URL_MAP[<span class="string">'REQUEST_URL'</span>] + <span class="string">"?access_token="</span> + access_token</span><br><span class="line">        api_headers = {<span class="string">'content-type'</span>: <span class="string">'application/x-www-form-urlencoded'</span>}</span><br><span class="line">        response = requests.post(request_url, data={<span class="string">'image'</span>: img}, headers=api_headers, timeout=<span class="number">5</span>)</span><br><span class="line">        captcha = response.json()[<span class="string">'words_result'</span>][<span class="number">0</span>][<span class="string">'words'</span>]</span><br><span class="line">        captcha = str(captcha.replace(<span class="string">'=?'</span>, <span class="string">''</span>)).split(<span class="string">'+'</span>)</span><br><span class="line">        captcha = sum(map(int, captcha))</span><br><span class="line">        self.logger.info(<span class="string">'验证码识别成功!'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 构造表单</span></span><br><span class="line">        token = ast.literal_eval(req.content.decode(<span class="string">'utf-8'</span>))[<span class="string">'token'</span>]</span><br><span class="line">        account = ast.literal_eval(user[<span class="number">1</span>])</span><br><span class="line">        formdata = {</span><br><span class="line">            <span class="string">'username'</span>: account[<span class="number">0</span>],</span><br><span class="line">            <span class="string">'password'</span>: account[<span class="number">1</span>],</span><br><span class="line">            <span class="string">'_eventId'</span>: <span class="string">'submit'</span>,</span><br><span class="line">            <span class="string">'token'</span>: token</span><br><span class="line">        }</span><br><span class="line">        formdata.update({f[<span class="string">'name'</span>]: f[<span class="string">'value'</span>] <span class="keyword">for</span> f <span class="keyword">in</span> form})</span><br><span class="line">        formdata.update({<span class="string">'captcha'</span>: captcha})</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 登录</span></span><br><span class="line">        req = self.sessions.post(URL_MAP[<span class="string">'LOGIN'</span>], headers=HEADERS, data=formdata, timeout=<span class="number">5</span>)</span><br><span class="line">        soup = BeautifulSoup(req.content, features=<span class="string">'html.parser'</span>)</span><br><span class="line">        errormes = soup.find(<span class="string">'span'</span>, id=<span class="string">'errormes'</span>)</span><br><span class="line">        <span class="keyword">if</span> errormes:</span><br><span class="line">            self.logger.error(errormes[<span class="string">'value'</span>])</span><br><span class="line">            <span class="keyword">raise</span> Exception(errormes[<span class="string">'value'</span>])</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 检测登录状态</span></span><br><span class="line">        url = self.sessions.get(URL_MAP[<span class="string">'HOST'</span>], headers=HEADERS, timeout=<span class="number">5</span>).url</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> url == URL_MAP[<span class="string">'HOST'</span>]:</span><br><span class="line">            self.logger.error(<span class="string">'登录失败, 未知错误!'</span>)</span><br><span class="line">            <span class="keyword">raise</span> Exception(<span class="string">'登录失败, 未知错误!'</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.logger.info(<span class="string">'使用账号密码登录成功!'</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @retry(stop_max_attempt_number=3)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post</span>(<span class="params">self, user</span>):</span></span><br><span class="line">        <span class="string">"""打卡"""</span></span><br><span class="line">        self.logger.info(<span class="string">'打卡进行中...'</span>)</span><br><span class="line">        req = self.sessions.get(URL_MAP[<span class="string">'HOST'</span>], headers=HEADERS, timeout=<span class="number">5</span>)</span><br><span class="line">        soup = BeautifulSoup(req.content, features=<span class="string">'html.parser'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 构造表单</span></span><br><span class="line">        csrf = soup.find(<span class="string">'meta'</span>, itemscope=<span class="string">'csrfToken'</span>)[<span class="string">'content'</span>]</span><br><span class="line">        formdata = {</span><br><span class="line">            <span class="string">'idc'</span>: <span class="string">'XSMRJKSB'</span>,</span><br><span class="line">            <span class="string">'release'</span>: <span class="string">''</span>,</span><br><span class="line">            <span class="string">'csrfToken'</span>: csrf,</span><br><span class="line">            <span class="string">'formData'</span>: <span class="string">'{"_VAR_URL":"https://ehall.hpu.edu.cn/infoplus/form/XSMRJKSB/start","_VAR_URL_Attr":"{}"}'</span></span><br><span class="line">        }</span><br><span class="line">        req = self.sessions.post(URL_MAP[<span class="string">'START'</span>], headers=HEADERS, data=formdata, timeout=<span class="number">5</span>)</span><br><span class="line">        url = req.json()[<span class="string">'entities'</span>][<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 构造表单</span></span><br><span class="line">        stepid = int(re.findall(<span class="string">r'\d+'</span>, url)[<span class="number">0</span>])</span><br><span class="line">        self.logger.info(<span class="string">'开始流程%s中...'</span>, stepid)</span><br><span class="line">        formdata = {</span><br><span class="line">            <span class="string">'stepId'</span>: stepid,</span><br><span class="line">            <span class="string">'instanceId'</span>: <span class="string">''</span>,</span><br><span class="line">            <span class="string">'admin'</span>: <span class="string">'false'</span>,</span><br><span class="line">            <span class="string">'rand'</span>: random.random() * <span class="number">999</span>,</span><br><span class="line">            <span class="string">'width'</span>: <span class="string">'1747'</span>,</span><br><span class="line">            <span class="string">'lang'</span>: <span class="string">'zh'</span>,</span><br><span class="line">            <span class="string">'csrfToken'</span>: csrf</span><br><span class="line">        }</span><br><span class="line">        HEADERS.update({<span class="string">'Referer'</span>: url})</span><br><span class="line">        req = self.sessions.post(URL_MAP[<span class="string">'RENDER'</span>], headers=HEADERS, data=formdata, timeout=<span class="number">5</span>)</span><br><span class="line">        self.logger.info(<span class="string">'已加载审批表!'</span>)</span><br><span class="line">        form = req.json()[<span class="string">'entities'</span>][<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 构造表单</span></span><br><span class="line">        instanceid = form[<span class="string">'step'</span>][<span class="string">'instanceId'</span>]</span><br><span class="line">        formdata = {</span><br><span class="line">            <span class="string">'stepId'</span>: stepid,</span><br><span class="line">            <span class="string">'includingTop'</span>: <span class="string">'true'</span>,</span><br><span class="line">            <span class="string">'csrfToken'</span>: csrf,</span><br><span class="line">            <span class="string">'lang'</span>: <span class="string">'zh'</span></span><br><span class="line">        }</span><br><span class="line">        req = self.sessions.post(URL_MAP[<span class="string">'PROCESS'</span>].replace(<span class="string">'[id]'</span>, instanceid), headers=HEADERS, data=formdata, timeout=<span class="number">5</span>)</span><br><span class="line">        self.logger.info(<span class="string">'审批表处理中...'</span>)</span><br><span class="line">        timestamp = req.json()[<span class="string">'entities'</span>][<span class="number">0</span>][<span class="string">'remarks'</span>][<span class="number">0</span>][<span class="string">'assignTime'</span>]</span><br><span class="line">        boundfields = <span class="string">','</span>.join(list(form[<span class="string">'data'</span>].keys()))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 构造表单</span></span><br><span class="line">        postdata = form[<span class="string">'data'</span>]</span><br><span class="line">        account = ast.literal_eval(user[<span class="number">1</span>])</span><br><span class="line">        fixdata = {</span><br><span class="line">            <span class="string">'fieldSQjhr'</span>: account[<span class="number">2</span>],</span><br><span class="line">            <span class="string">'fieldSQjhrlxdh'</span>: account[<span class="number">3</span>],</span><br><span class="line">            <span class="string">'fieldSQhjd'</span>: account[<span class="number">4</span>],</span><br><span class="line">            <span class="string">'fieldTXxjzdlx'</span>: <span class="string">'1'</span>,</span><br><span class="line">            <span class="string">'fieldTXsfqgyq'</span>: <span class="string">'未去过重点疫区'</span>,</span><br><span class="line">            <span class="string">'fieldTXsfqgyq_Name'</span>: <span class="string">'未去过重点疫区'</span>,</span><br><span class="line">            <span class="string">'fieldTXsfjc'</span>: <span class="string">'2'</span>,</span><br><span class="line">            <span class="string">'fieldTXcjtw'</span>: <span class="string">'36.6-36.9'</span>,</span><br><span class="line">            <span class="string">'fieldTXcjtw_Name'</span>: <span class="string">'36.6-36.9'</span>,</span><br><span class="line">            <span class="string">'fieldTXsfyc'</span>: <span class="string">'2'</span>,</span><br><span class="line">            <span class="string">'fieldTXsfjcqk'</span>: <span class="string">''</span>,</span><br><span class="line">            <span class="string">'fieldTXsfjcqk_Name'</span>: <span class="string">''</span>,</span><br><span class="line">            <span class="string">'fieldTXzz'</span>: <span class="string">''</span>,</span><br><span class="line">            <span class="string">'fieldTXzz_Name'</span>: <span class="string">''</span>,</span><br><span class="line">            <span class="string">'fieldTXzz1'</span>: <span class="string">''</span>,</span><br><span class="line">            <span class="string">'fieldTXycjg'</span>: <span class="string">''</span>,</span><br><span class="line">            <span class="string">'fieldTXycjg_Name'</span>: <span class="string">''</span>,</span><br><span class="line">            <span class="string">'fieldTXycjgqt'</span>: <span class="string">''</span>,</span><br><span class="line">            <span class="string">'fieldTXzlcs'</span>: <span class="string">''</span></span><br><span class="line">        }</span><br><span class="line">        postdata.update(fixdata)</span><br><span class="line">        <span class="keyword">if</span> self.addr == <span class="string">'1'</span>:</span><br><span class="line">            fixdata = {</span><br><span class="line">                <span class="string">'fieldTXsf'</span>: <span class="string">'410000'</span>,</span><br><span class="line">                <span class="string">'fieldTXsf_Name'</span>: <span class="string">'河南省'</span>,</span><br><span class="line">                <span class="string">'fieldTXcs'</span>: <span class="string">'410100'</span>,</span><br><span class="line">                <span class="string">'fieldTXcs_Name'</span>: <span class="string">'郑州市'</span>,</span><br><span class="line">                <span class="string">'fieldTXcs_Attr'</span>: <span class="string">'{\"_parent\":\"410000\"}'</span>,</span><br><span class="line">                <span class="string">'fieldTXdq'</span>: <span class="string">'410103'</span>,</span><br><span class="line">                <span class="string">'fieldTXdq_Name'</span>: <span class="string">'二七区'</span>,</span><br><span class="line">                <span class="string">'fieldTXdq_Attr'</span>: <span class="string">'{\"_parent\":\"410100\"}'</span>,</span><br><span class="line">                <span class="string">'fieldTXjtwz'</span>: <span class="string">'河南省郑州市二七区'</span></span><br><span class="line">            }</span><br><span class="line">        <span class="keyword">elif</span> self.addr == <span class="string">'2'</span>:</span><br><span class="line">            fixdata = {</span><br><span class="line">                <span class="string">'fieldTXsf'</span>: <span class="string">'410000'</span>,</span><br><span class="line">                <span class="string">'fieldTXsf_Name'</span>: <span class="string">'河南省'</span>,</span><br><span class="line">                <span class="string">'fieldTXcs'</span>: <span class="string">'410800'</span>,</span><br><span class="line">                <span class="string">'fieldTXcs_Name'</span>: <span class="string">'焦作市'</span>,</span><br><span class="line">                <span class="string">'fieldTXcs_Attr'</span>: <span class="string">'{\"_parent\":\"410000\"}'</span>,</span><br><span class="line">                <span class="string">'fieldTXdq'</span>: <span class="string">'410811'</span>,</span><br><span class="line">                <span class="string">'fieldTXdq_Name'</span>: <span class="string">'山阳区'</span>,</span><br><span class="line">                <span class="string">'fieldTXdq_Attr'</span>: <span class="string">'{\"_parent\":\"410800\"}'</span>,</span><br><span class="line">                <span class="string">'fieldTXjtwz'</span>: <span class="string">'河南理工大学'</span></span><br><span class="line">            }</span><br><span class="line">        postdata.update(fixdata)</span><br><span class="line">        <span class="keyword">if</span> self.chaddr:</span><br><span class="line">            postdata.update({<span class="string">'_VAR_ADDR'</span>: self.ipaddr})</span><br><span class="line">        formdata = {</span><br><span class="line">            <span class="string">'stepId'</span>: stepid,</span><br><span class="line">            <span class="string">'actionId'</span>: <span class="number">1</span>,</span><br><span class="line">            <span class="string">'formData'</span>: str(postdata),</span><br><span class="line">            <span class="string">'timestamp'</span>: timestamp,</span><br><span class="line">            <span class="string">'rand'</span>: random.random() * <span class="number">999</span>,</span><br><span class="line">            <span class="string">'boundFields'</span>: boundfields,</span><br><span class="line">            <span class="string">'csrfToken'</span>: csrf,</span><br><span class="line">            <span class="string">'lang'</span>: <span class="string">'zh'</span></span><br><span class="line">        }</span><br><span class="line">        req = self.sessions.post(URL_MAP[<span class="string">'NEXTSTEP'</span>], headers=HEADERS, data=formdata, timeout=<span class="number">5</span>)</span><br><span class="line">        <span class="keyword">if</span> req.json()[<span class="string">'ecode'</span>] == <span class="string">'SUCCEED'</span>:</span><br><span class="line">            self.logger.info(<span class="string">'健康打卡准备阶段, 成功!'</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> Exception(<span class="string">'健康打卡准备阶段, 失败!'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 构造表单</span></span><br><span class="line">        formdata = {</span><br><span class="line">            <span class="string">'actionId'</span>: <span class="number">1</span>,</span><br><span class="line">            <span class="string">'formData'</span>: str(form[<span class="string">'data'</span>]),</span><br><span class="line">            <span class="string">'remark'</span>: <span class="string">''</span>,</span><br><span class="line">            <span class="string">'rand'</span>: random.random() * <span class="number">999</span>,</span><br><span class="line">            <span class="string">'nextUsers'</span>: <span class="string">'{}'</span>,</span><br><span class="line">            <span class="string">'stepId'</span>: stepid,</span><br><span class="line">            <span class="string">'timestamp'</span>: timestamp,</span><br><span class="line">            <span class="string">'boundFields'</span>: boundfields,</span><br><span class="line">            <span class="string">'csrfToken'</span>: csrf,</span><br><span class="line">            <span class="string">'lang'</span>: <span class="string">'zh'</span></span><br><span class="line">        }</span><br><span class="line">        req = self.sessions.post(URL_MAP[<span class="string">'DOACTION'</span>], headers=HEADERS, data=formdata, timeout=<span class="number">5</span>)</span><br><span class="line">        <span class="keyword">if</span> req.json()[<span class="string">'ecode'</span>] == <span class="string">'SUCCEED'</span>:</span><br><span class="line">            self.logger.info(<span class="string">'健康打卡填报阶段, 成功!'</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> Exception(<span class="string">'健康打卡填报阶段, 失败!'</span>)</span><br><span class="line">        self.check()</span><br><span class="line"></span><br><span class="line"><span class="meta">    @retry(stop_max_attempt_number=3)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">check</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="string">"""打卡完毕后复检"""</span></span><br><span class="line">        req = self.sessions.get(URL_MAP[<span class="string">'CHECK'</span>], headers=HEADERS, timeout=<span class="number">5</span>)</span><br><span class="line">        last_time = req.json()[<span class="string">'entities'</span>][<span class="number">0</span>][<span class="string">'update'</span>]</span><br><span class="line">        local_time = time.strftime(<span class="string">"%Y/%m/%d %H:%M:%S"</span>, time.localtime(last_time))</span><br><span class="line">        update = round(time.time()) - last_time</span><br><span class="line">        <span class="keyword">if</span> update &gt; <span class="number">5</span>:</span><br><span class="line">            self.logger.error(<span class="string">'上次打卡完成于%ss前,打卡可能未成功!'</span>, update)</span><br><span class="line">            <span class="keyword">raise</span> Exception(<span class="string">'打卡复检状态异常!'</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.logger.info(<span class="string">'打卡完成于%s'</span>, local_time)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    BOT = Bot(<span class="string">'config.ini'</span>)</span><br><span class="line"></span><br></pre></td></tr></tbody></table></div></figure><div class="copy-btn"><i class="fa fa-clipboard"></i></div></div>
+<h1 id="Coding"><a href="https://blog.todest.cn/post/934e7461/#Coding" class="headerlink" title="Coding"></a>Coding</h1><h2 id="创建项目"><a href="https://blog.todest.cn/post/934e7461/#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE" class="headerlink" title="创建项目"></a>创建项目</h2><p>登录<a target="_blank" rel="noopener" href="https://e.coding.net/login">Coding</a>， 进入团队，切换到项目（左边栏点击’项目’），创建项目，选择DevOps项目。</p>
+<h2 id="创建代码仓库"><a href="https://blog.todest.cn/post/934e7461/#%E5%88%9B%E5%BB%BA%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93" class="headerlink" title="创建代码仓库"></a>创建代码仓库</h2><p>切换到代码仓库，新建代码仓库，勾选启用READEME.md文件初始化项目，取消启用代码扫描，点击确认。<br><a class="fancybox fancybox.image" href="./自动健康打卡 _ 亦往沧劫_files/20201205164547.png" itemscope="" itemtype="http://schema.org/ImageObject" itemprop="url" data-fancybox="default" rel="default"><img data-src="https://cdn.file.todest.cn/blog/pic/20201205164547.png" alt="" src="./自动健康打卡 _ 亦往沧劫_files/20201205164547.png" data-loaded="true"></a></p>
+<h2 id="上传文件"><a href="https://blog.todest.cn/post/934e7461/#%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6" class="headerlink" title="上传文件"></a>上传文件</h2><p>新建文件main.py，将完整代码粘贴进去，点击提交并直接确认。<br><a class="fancybox fancybox.image" href="./自动健康打卡 _ 亦往沧劫_files/20201205164816.png" itemscope="" itemtype="http://schema.org/ImageObject" itemprop="url" data-fancybox="default" rel="default"><img data-src="https://cdn.file.todest.cn/blog/pic/20201205164816.png" alt="" src="./自动健康打卡 _ 亦往沧劫_files/20201205164816.png" data-loaded="true"></a><br>点击上方浏览返回文件根目录，再次创建文件Jenkinsfile (注: 无文件名后缀，请不要自行发挥)，粘贴下面代码并提交，并重复此步骤将修改好的config.ini上传。<br></p><div class="highlight-container"><figure class="highlight yml"><figcaption><span>Jenkinsfile</span></figcaption><div class="table-container"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">pipeline</span> {</span><br><span class="line">  <span class="string">agent</span> {</span><br><span class="line">    <span class="string">any</span> {</span><br><span class="line">      <span class="string">reuseNode</span> <span class="literal">true</span></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">  }</span><br><span class="line">  <span class="string">stages</span> {</span><br><span class="line">    <span class="string">stage('检出')</span> {</span><br><span class="line">      <span class="string">steps</span> {</span><br><span class="line">        <span class="string">checkout(</span>[</span><br><span class="line">          <span class="string">$class:</span> <span class="string">'GitSCM'</span>,</span><br><span class="line">          <span class="attr">branches:</span> [[<span class="attr">name:</span> <span class="string">env.GIT_BUILD_REF</span>]],</span><br><span class="line">          <span class="attr">userRemoteConfigs:</span> [[</span><br><span class="line">            <span class="attr">url:</span> <span class="string">env.GIT_REPO_URL</span>,</span><br><span class="line">            <span class="attr">credentialsId:</span> <span class="string">env.CREDENTIALS_ID</span></span><br><span class="line">          ]]]<span class="string">)</span></span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">      <span class="string">stage('安装依赖')</span> {</span><br><span class="line">        <span class="string">steps</span> {</span><br><span class="line">          <span class="string">sh</span> <span class="string">''</span><span class="string">'pip3.5 install --upgrade pip</span></span><br><span class="line"><span class="string">pip3.5 install setuptools</span></span><br><span class="line"><span class="string">pip3.5 install requests</span></span><br><span class="line"><span class="string">pip3.5 install bs4</span></span><br><span class="line"><span class="string">pip3.5 install configparser</span></span><br><span class="line"><span class="string">pip3.5 install retrying'</span><span class="string">''</span></span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">      <span class="string">stage('运行')</span> {</span><br><span class="line">        <span class="string">steps</span> {</span><br><span class="line">          <span class="string">sh</span> <span class="string">'python3 main.py'</span></span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br></pre></td></tr></tbody></table></div></figure><div class="copy-btn"><i class="fa fa-clipboard"></i></div></div><p></p>
+<h2 id="创建构建计划"><a href="https://blog.todest.cn/post/934e7461/#%E5%88%9B%E5%BB%BA%E6%9E%84%E5%BB%BA%E8%AE%A1%E5%88%92" class="headerlink" title="创建构建计划"></a>创建构建计划</h2><p>切换到持续集成-&gt;构建计划，创建构建计划，翻到最下面选择自定义构建过程，代码仓库选择此代码仓库，配置来源勾选上使用代码库中的Jenkinsfile，点击确认。<br><a class="fancybox fancybox.image" href="./自动健康打卡 _ 亦往沧劫_files/20201205165857.png" itemscope="" itemtype="http://schema.org/ImageObject" itemprop="url" data-fancybox="default" rel="default"><img data-src="https://cdn.file.todest.cn/blog/pic/20201205165857.png" alt="" src="./自动健康打卡 _ 亦往沧劫_files/20201205165857.png" data-loaded="true"></a><br>保存并构建，确认，立即构建，等待构建成功。<br><a class="fancybox fancybox.image" href="https://cdn.file.todest.cn/blog/pic/20201205170328.png" itemscope="" itemtype="http://schema.org/ImageObject" itemprop="url" data-fancybox="default" rel="default"><img data-src="https://cdn.file.todest.cn/blog/pic/20201205170328.png" alt=""></a></p>
+<h2 id="设置定时触发"><a href="https://blog.todest.cn/post/934e7461/#%E8%AE%BE%E7%BD%AE%E5%AE%9A%E6%97%B6%E8%A7%A6%E5%8F%91" class="headerlink" title="设置定时触发"></a>设置定时触发</h2><p>点击右上角的设置修改构建计划的配置，切换到触发规则，添加定时触发，设置好触发的时期时间点击确认。<br><a class="fancybox fancybox.image" href="https://cdn.file.todest.cn/blog/pic/20201205170919.png" itemscope="" itemtype="http://schema.org/ImageObject" itemprop="url" data-fancybox="default" rel="default"><img data-src="https://cdn.file.todest.cn/blog/pic/20201205170919.png" alt=""></a></p>
+<h2 id="完成并查看"><a href="https://blog.todest.cn/post/934e7461/#%E5%AE%8C%E6%88%90%E5%B9%B6%E6%9F%A5%E7%9C%8B" class="headerlink" title="完成并查看"></a>完成并查看</h2><p>如果到了这里还没有出现错误的话，那么就基本没问题了，可以在项目概览查看每次定时触发情况。<br><a class="fancybox fancybox.image" href="https://cdn.file.todest.cn/blog/pic/20201205171438.png" itemscope="" itemtype="http://schema.org/ImageObject" itemprop="url" data-fancybox="default" rel="default"><img data-src="https://cdn.file.todest.cn/blog/pic/20201205171438.png" alt=""></a><br>也可以点击任务ID查看执行日志。<br><a class="fancybox fancybox.image" href="https://cdn.file.todest.cn/blog/pic/20201205171840.png" itemscope="" itemtype="http://schema.org/ImageObject" itemprop="url" data-fancybox="default" rel="default"><img data-src="https://cdn.file.todest.cn/blog/pic/20201205171840.png" alt=""></a><br>最后，也可以前往<a target="_blank" rel="noopener" href="https://ehall.hpu.edu.cn/taskcenter/workflow/done">学校官网</a>查看打卡情况。</p>
+<h2 id="邮件通知"><a href="https://blog.todest.cn/post/934e7461/#%E9%82%AE%E4%BB%B6%E9%80%9A%E7%9F%A5" class="headerlink" title="邮件通知"></a>邮件通知</h2><p>一般来说，以目前最新的代码，如果构建失败则打卡失败，所以添加构建失败后邮件提醒还是很有必要的。<br>如果想要构建失败后邮件通知的话，需要在个人账户设置-&gt;提醒设置里面开启持续集成（构建）邮件提醒。<br><a class="fancybox fancybox.image" href="https://cdn.file.todest.cn/blog/pic/20201207181947.png" itemscope="" itemtype="http://schema.org/ImageObject" itemprop="url" data-fancybox="default" rel="default"><img data-src="https://cdn.file.todest.cn/blog/pic/20201207181947.png" alt=""></a><br>并且需要在个人账户设置-&gt;邮箱设置添加想要接收邮件的邮箱并验证邮箱。<br><a class="fancybox fancybox.image" href="https://cdn.file.todest.cn/blog/pic/20201207182447.png" itemscope="" itemtype="http://schema.org/ImageObject" itemprop="url" data-fancybox="default" rel="default"><img data-src="https://cdn.file.todest.cn/blog/pic/20201207182447.png" alt=""></a><br>同时，在构建计划设置-&gt;通知提醒里面添加成员为自己并修改通知事件为仅失败。<br><a class="fancybox fancybox.image" href="https://cdn.file.todest.cn/blog/pic/20201207182104.png" itemscope="" itemtype="http://schema.org/ImageObject" itemprop="url" data-fancybox="default" rel="default"><img data-src="https://cdn.file.todest.cn/blog/pic/20201207182104.png" alt=""></a></p>
+<h1 id="最近更改"><a href="https://blog.todest.cn/post/934e7461/#%E6%9C%80%E8%BF%91%E6%9B%B4%E6%94%B9" class="headerlink" title="最近更改"></a>最近更改</h1><blockquote><p>2021.05.18 由于学校<a target="_blank" rel="noopener" href="https://uia.hpu.edu.cn/">统一认证</a>账号发生变化，使用默认密码登录后会强制跳转修改密码界面，造成打卡失败，需修改为非默认密码，并修改配置文件中的密码项。</p>
+</blockquote>
+<blockquote><p>2021.05.25 由于Coding发生改变，需要将Jenkinsfile的pip全都改成pip3.5，修改后Jenkinsfile的见本文。</p>
+</blockquote>
+<blockquote><p>2021.06.03 由于百度智能云发生变化，导致验证码识别API无法使用，需前往百度智能云<a target="_blank" rel="noopener" href="https://console.bce.baidu.com/ai/?#/ai/ocr/overview/index">文字识别</a>领取免费资源。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>赏点呗！</div>
+  <button onclick="var qr = document.getElementById(&#39;qr&#39;); qr.style.display = (qr.style.display === &#39;none&#39;) ? &#39;block&#39; : &#39;none&#39;;">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="./自动健康打卡 _ 亦往沧劫_files/wechatpay.jpg" alt="亦往沧劫 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="./自动健康打卡 _ 亦往沧劫_files/alipay.jpg" alt="亦往沧劫 支付宝">
+        <p>支付宝</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="./自动健康打卡 _ 亦往沧劫_files/bitcoin.png" alt="亦往沧劫 比特币">
+        <p>比特币</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="https://blog.todest.cn/tags/Python/" rel="tag"># Python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="https://blog.todest.cn/post/b286d8f1/" rel="prev" title="ARP攻击">
+      <i class="fa fa-chevron-left"></i> ARP攻击
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments v" id="valine-comments" data-class="v" style="opacity: 1; display: block;"><div class="vpanel"><div class="vwrap"><p class="cancel-reply text-right" style="display:none;" title="取消回复"><svg class="vicon cancel-reply-btn" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4220" width="22" height="22"><path d="M796.454 985H227.545c-50.183 0-97.481-19.662-133.183-55.363-35.7-35.701-55.362-83-55.362-133.183V227.545c0-50.183 19.662-97.481 55.363-133.183 35.701-35.7 83-55.362 133.182-55.362h568.909c50.183 0 97.481 19.662 133.183 55.363 35.701 35.702 55.363 83 55.363 133.183v568.909c0 50.183-19.662 97.481-55.363 133.183S846.637 985 796.454 985zM227.545 91C152.254 91 91 152.254 91 227.545v568.909C91 871.746 152.254 933 227.545 933h568.909C871.746 933 933 871.746 933 796.454V227.545C933 152.254 871.746 91 796.454 91H227.545z" p-id="4221"></path><path d="M568.569 512l170.267-170.267c15.556-15.556 15.556-41.012 0-56.569s-41.012-15.556-56.569 0L512 455.431 341.733 285.165c-15.556-15.556-41.012-15.556-56.569 0s-15.556 41.012 0 56.569L455.431 512 285.165 682.267c-15.556 15.556-15.556 41.012 0 56.569 15.556 15.556 41.012 15.556 56.569 0L512 568.569l170.267 170.267c15.556 15.556 41.012 15.556 56.569 0 15.556-15.556 15.556-41.012 0-56.569L568.569 512z" p-id="4222"></path></svg></p><div class="vheader item3"><input name="nick" placeholder="昵称" class="vnick vinput" type="text"><input name="mail" placeholder="邮箱" class="vmail vinput" type="email"><input name="link" placeholder="网址(http://)" class="vlink vinput" type="text"></div><div class="vedit"><textarea id="veditor" class="veditor vinput" placeholder="写点什么？"></textarea><div class="vrow"><div class="vcol vcol-60 status-bar"></div><div class="vcol vcol-40 vctrl text-right"><span title="表情" class="vicon vemoji-btn"><svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="16172" width="22" height="22"><path d="M512 1024a512 512 0 1 1 512-512 512 512 0 0 1-512 512zM512 56.888889a455.111111 455.111111 0 1 0 455.111111 455.111111 455.111111 455.111111 0 0 0-455.111111-455.111111zM312.888889 512A85.333333 85.333333 0 1 1 398.222222 426.666667 85.333333 85.333333 0 0 1 312.888889 512z" p-id="16173"></path><path d="M512 768A142.222222 142.222222 0 0 1 369.777778 625.777778a28.444444 28.444444 0 0 1 56.888889 0 85.333333 85.333333 0 0 0 170.666666 0 28.444444 28.444444 0 0 1 56.888889 0A142.222222 142.222222 0 0 1 512 768z" p-id="16174"></path><path d="M782.222222 391.964444l-113.777778 59.733334a29.013333 29.013333 0 0 1-38.684444-10.808889 28.444444 28.444444 0 0 1 10.24-38.684445l113.777778-56.888888a28.444444 28.444444 0 0 1 38.684444 10.24 28.444444 28.444444 0 0 1-10.24 36.408888z" p-id="16175"></path><path d="M640.568889 451.697778l113.777778 56.888889a27.875556 27.875556 0 0 0 38.684444-10.24 27.875556 27.875556 0 0 0-10.24-38.684445l-113.777778-56.888889a28.444444 28.444444 0 0 0-38.684444 10.808889 28.444444 28.444444 0 0 0 10.24 38.115556z" p-id="16176"></path></svg></span><span title="预览" class="vicon vpreview-btn"><svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="17688" width="22" height="22"><path d="M502.390154 935.384615a29.538462 29.538462 0 1 1 0 59.076923H141.430154C79.911385 994.461538 29.538462 946.254769 29.538462 886.153846V137.846154C29.538462 77.745231 79.950769 29.538462 141.390769 29.538462h741.218462c61.44 0 111.852308 48.206769 111.852307 108.307692v300.268308a29.538462 29.538462 0 1 1-59.076923 0V137.846154c0-26.899692-23.355077-49.230769-52.775384-49.230769H141.390769c-29.420308 0-52.775385 22.331077-52.775384 49.230769v748.307692c0 26.899692 23.355077 49.230769 52.775384 49.230769h360.999385z" p-id="17689"></path><path d="M196.923077 216.615385m29.538461 0l374.153847 0q29.538462 0 29.538461 29.538461l0 0q0 29.538462-29.538461 29.538462l-374.153847 0q-29.538462 0-29.538461-29.538462l0 0q0-29.538462 29.538461-29.538461Z" p-id="17690"></path><path d="M649.846154 846.769231a216.615385 216.615385 0 1 0 0-433.230769 216.615385 216.615385 0 0 0 0 433.230769z m0 59.076923a275.692308 275.692308 0 1 1 0-551.384616 275.692308 275.692308 0 0 1 0 551.384616z" p-id="17691"></path><path d="M807.398383 829.479768m20.886847-20.886846l0 0q20.886846-20.886846 41.773692 0l125.321079 125.321079q20.886846 20.886846 0 41.773693l0 0q-20.886846 20.886846-41.773693 0l-125.321078-125.321079q-20.886846-20.886846 0-41.773693Z" p-id="17692"></path></svg></span></div></div></div><div class="vrow"><div class="vcol vcol-30"><a alt="Markdown is supported" href="https://guides.github.com/features/mastering-markdown/" class="vicon" target="_blank"><svg class="markdown" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M14.85 3H1.15C.52 3 0 3.52 0 4.15v7.69C0 12.48.52 13 1.15 13h13.69c.64 0 1.15-.52 1.15-1.15v-7.7C16 3.52 15.48 3 14.85 3zM9 11H7V8L5.5 9.92 4 8v3H2V5h2l1.5 2L7 5h2v6zm2.99.5L9.5 8H11V5h2v3h1.5l-2.51 3.5z"></path></svg></a></div><div class="vcol vcol-70 text-right"><button type="button" title="Cmd|Ctrl+Enter" class="vsubmit vbtn">提交</button></div></div><div class="vemojis" style="display:none;"></div><div class="vinput vpreview" style="display:none;"></div><div style="display:none;" class="vmark"></div></div></div><div class="vcount" style="display: block;"><span class="vnum">22</span> 评论</div><div class="vload-top text-center" style="display:none;"><i class="vspinner" style="width:30px;height:30px;"></i></div><div class="vcards"><div class="vcard" id="61287c729c2c492f6aabb4c5"><img class="vimg" src="./自动健康打卡 _ 亦往沧劫_files/d41d8cd98f00b204e9800998ecf8427e.png"><div class="vh"><div class="vhead"><span class="vnick">Anonymous</span> <span class="vsys">Edge 93.0.961.27</span> <span class="vsys">Windows 10.0</span></div><div class="vmeta"><span class="vtime">1 天前</span><span class="vat" data-vm-id="61287c729c2c492f6aabb4c5" data-self-id="61287c729c2c492f6aabb4c5">回复</span></div><div class="vcontent" data-expand="查看更多..."><p>最新的那个定位，吧<br>            ‘fieldAN’: ‘获取位置信息’,<br>            ‘fieldDWAN’: ‘河南省焦作市解放区人民路’,<br>            ‘fieldGRDW’: ‘113.23563548681861,35.215611703666454,17’,<br>            ‘fieldGRDW_Name’: ‘自动获取’,<br>这一段加到202行那个fixdata里就行了</p>
+</div><div class="vreply-wrapper" data-self-id="61287c729c2c492f6aabb4c5"></div><div class="vquote" data-self-id="61287c729c2c492f6aabb4c5"></div></div></div><div class="vcard" id="61285ca5e83fb06ed859275c"><img class="vimg" src="./自动健康打卡 _ 亦往沧劫_files/d41d8cd98f00b204e9800998ecf8427e.png"><div class="vh"><div class="vhead"><span class="vnick">Anonymous</span> <span class="vsys">Chrome 84.0.4147.89</span> <span class="vsys">Windows 10.0</span></div><div class="vmeta"><span class="vtime">1 天前</span><span class="vat" data-vm-id="61285ca5e83fb06ed859275c" data-self-id="61285ca5e83fb06ed859275c">回复</span></div><div class="vcontent" data-expand="查看更多..."><p>哥，现在要定位了，怎么办啊 <img alt="bomb" class="vemoji" referrerpolicy="no-referrer" src="./自动健康打卡 _ 亦往沧劫_files/2018new_shuai_thumb.png"></p>
+</div><div class="vreply-wrapper" data-self-id="61285ca5e83fb06ed859275c"></div><div class="vquote" data-self-id="61285ca5e83fb06ed859275c"></div></div></div><div class="vcard" id="612834b6e83fb06ed858e441"><img class="vimg" src="./自动健康打卡 _ 亦往沧劫_files/d41d8cd98f00b204e9800998ecf8427e.png"><div class="vh"><div class="vhead"><span class="vnick">Daiki_Koh</span> <span class="vsys">Safari 14.1.1</span> <span class="vsys">macOS 10.15.7</span></div><div class="vmeta"><span class="vtime">1 天前</span><span class="vat" data-vm-id="612834b6e83fb06ed858e441" data-self-id="612834b6e83fb06ed858e441">回复</span></div><div class="vcontent" data-expand="查看更多..."><p>现在要定位了哥 <img alt="bomb" class="vemoji" referrerpolicy="no-referrer" src="./自动健康打卡 _ 亦往沧劫_files/2018new_shuai_thumb.png"></p>
+</div><div class="vreply-wrapper" data-self-id="612834b6e83fb06ed858e441"></div><div class="vquote" data-self-id="612834b6e83fb06ed858e441"><div class="vcard" id="61283540e83fb06ed858e4dc"><img class="vimg" src="./自动健康打卡 _ 亦往沧劫_files/4756cb352ec7f58884fdc0c219ea00dc.jpeg"><div class="vh"><div class="vhead"><a class="vnick" rel="nofollow" href="https://blog.todest.cn/" target="_blank">亦往沧劫</a> <span class="vsys">QQ 8.8.20.5865</span> <span class="vsys">Android 11</span></div><div class="vmeta"><span class="vtime">1 天前</span><span class="vat" data-vm-id="612834b6e83fb06ed858e441" data-self-id="61283540e83fb06ed858e4dc">回复</span></div><div class="vcontent" data-expand="查看更多..."><p><a href="https://blog.todest.cn/post/934e7461/#612834b6e83fb06ed858e441" target="_blank" rel="nofollow">@Daiki_Koh </a> , 我都毕业了，不用了 <img alt="no way" class="vemoji" referrerpolicy="no-referrer" src="./自动健康打卡 _ 亦往沧劫_files/2018new_kuxiao_org.png"></p>
+</div><div class="vreply-wrapper" data-self-id="61283540e83fb06ed858e4dc"></div><div class="vquote" data-self-id="61283540e83fb06ed858e4dc"></div></div></div></div></div></div><div class="vcard" id="60e3cf8498db5c2d235d6110"><img class="vimg" src="./自动健康打卡 _ 亦往沧劫_files/c685b78d618413e46c3ac3feb96653f9.png"><div class="vh"><div class="vhead"><a class="vnick" rel="nofollow" href="http://www.zysgp.net/" target="_blank">站元素主机</a> <span class="vsys">Firefox 89.0</span> <span class="vsys">Windows 10.0</span></div><div class="vmeta"><span class="vtime">2021-07-06</span><span class="vat" data-vm-id="60e3cf8498db5c2d235d6110" data-self-id="60e3cf8498db5c2d235d6110">回复</span></div><div class="vcontent" data-expand="查看更多..."><p>感谢分享 赞一个</p>
+</div><div class="vreply-wrapper" data-self-id="60e3cf8498db5c2d235d6110"></div><div class="vquote" data-self-id="60e3cf8498db5c2d235d6110"></div></div></div><div class="vcard" id="60c936a76856200dbcafc3f7"><img class="vimg" src="./自动健康打卡 _ 亦往沧劫_files/d41d8cd98f00b204e9800998ecf8427e.png"><div class="vh"><div class="vhead"><span class="vnick">Anonymous</span> <span class="vsys">Chrome 91.0.4472.80</span> <span class="vsys">iOS 14.6</span></div><div class="vmeta"><span class="vtime">2021-06-16</span><span class="vat" data-vm-id="60c936a76856200dbcafc3f7" data-self-id="60c936a76856200dbcafc3f7">回复</span></div><div class="vcontent" data-expand="查看更多..."><p>打卡好像又不行了</p>
+</div><div class="vreply-wrapper" data-self-id="60c936a76856200dbcafc3f7"></div><div class="vquote" data-self-id="60c936a76856200dbcafc3f7"><div class="vcard" id="60c93d316856200dbcafc741"><img class="vimg" src="./自动健康打卡 _ 亦往沧劫_files/4756cb352ec7f58884fdc0c219ea00dc.jpeg"><div class="vh"><div class="vhead"><a class="vnick" rel="nofollow" href="https://blog.todest.cn/" target="_blank">亦往沧劫</a> <span class="vsys">Chrome 86.0.4240.198</span> <span class="vsys">Windows 10.0</span></div><div class="vmeta"><span class="vtime">2021-06-16</span><span class="vat" data-vm-id="60c936a76856200dbcafc3f7" data-self-id="60c93d316856200dbcafc741">回复</span></div><div class="vcontent" data-expand="查看更多..."><p><a href="https://blog.todest.cn/post/934e7461/#60c936a76856200dbcafc3f7" target="_blank" rel="nofollow">@Anonymous </a> , 我这里可以啊</p>
+</div><div class="vreply-wrapper" data-self-id="60c93d316856200dbcafc741"></div><div class="vquote" data-self-id="60c93d316856200dbcafc741"></div></div></div><div class="vcard" id="60cf2b3ff4aeaa0de5a26920"><img class="vimg" src="./自动健康打卡 _ 亦往沧劫_files/d41d8cd98f00b204e9800998ecf8427e.png"><div class="vh"><div class="vhead"><span class="vnick">Anonymous</span> <span class="vsys">Edge 91.0.864.54</span> <span class="vsys">Windows 10.0</span></div><div class="vmeta"><span class="vtime">2021-06-20</span><span class="vat" data-vm-id="60c936a76856200dbcafc3f7" data-self-id="60cf2b3ff4aeaa0de5a26920">回复</span></div><div class="vcontent" data-expand="查看更多..."><p><a href="https://blog.todest.cn/post/934e7461/#60c936a76856200dbcafc3f7" target="_blank" rel="nofollow">@Anonymous </a> , 可以的 一步一步来 也需要在百度上领取免费额度</p>
+</div><div class="vreply-wrapper" data-self-id="60cf2b3ff4aeaa0de5a26920"></div><div class="vquote" data-self-id="60cf2b3ff4aeaa0de5a26920"></div></div></div></div></div></div><div class="vcard" id="60bea41b1322d7144a62ac97"><img class="vimg" src="./自动健康打卡 _ 亦往沧劫_files/d41d8cd98f00b204e9800998ecf8427e.png"><div class="vh"><div class="vhead"><span class="vnick">Anonymous</span> <span class="vsys">Chrome 90.0.4430.216</span> <span class="vsys">iOS 14.6</span></div><div class="vmeta"><span class="vtime">2021-06-08</span><span class="vat" data-vm-id="60bea41b1322d7144a62ac97" data-self-id="60bea41b1322d7144a62ac97">回复</span></div><div class="vcontent" data-expand="查看更多..."><p>最近怎么打卡不成功了，有人知道怎么回事吗</p>
+</div><div class="vreply-wrapper" data-self-id="60bea41b1322d7144a62ac97"></div><div class="vquote" data-self-id="60bea41b1322d7144a62ac97"><div class="vcard" id="60bee6d91322d7144a62ef8e"><img class="vimg" src="./自动健康打卡 _ 亦往沧劫_files/4756cb352ec7f58884fdc0c219ea00dc.jpeg"><div class="vh"><div class="vhead"><a class="vnick" rel="nofollow" href="https://blog.todest.cn/" target="_blank">亦往沧劫</a> <span class="vsys">Chrome 86.0.4240.198</span> <span class="vsys">Windows 10.0</span></div><div class="vmeta"><span class="vtime">2021-06-08</span><span class="vat" data-vm-id="60bea41b1322d7144a62ac97" data-self-id="60bee6d91322d7144a62ef8e">回复</span></div><div class="vcontent" data-expand="查看更多..."><p><a href="https://blog.todest.cn/post/934e7461/#60bea41b1322d7144a62ac97" target="_blank" rel="nofollow">@Anonymous </a> , 见本文<a href="https://blog.todest.cn/post/934e7461/#%E6%9C%80%E8%BF%91%E6%9B%B4%E6%94%B9" target="_blank" rel="nofollow">最近更改</a></p>
+</div><div class="vreply-wrapper" data-self-id="60bee6d91322d7144a62ef8e"></div><div class="vquote" data-self-id="60bee6d91322d7144a62ef8e"></div></div></div><div class="vcard" id="60bef4f71322d7144a62fff2"><img class="vimg" src="./自动健康打卡 _ 亦往沧劫_files/d41d8cd98f00b204e9800998ecf8427e.png"><div class="vh"><div class="vhead"><span class="vnick">Anonymous</span> <span class="vsys">Chrome 91.0.4472.77</span> <span class="vsys">Windows 10.0</span></div><div class="vmeta"><span class="vtime">2021-06-08</span><span class="vat" data-vm-id="60bea41b1322d7144a62ac97" data-self-id="60bef4f71322d7144a62fff2">回复</span></div><div class="vcontent" data-expand="查看更多..."><p><a href="https://blog.todest.cn/post/934e7461/#60bee6d91322d7144a62ef8e" target="_blank" rel="nofollow">@亦往沧劫 </a> , 赞</p>
+</div><div class="vreply-wrapper" data-self-id="60bef4f71322d7144a62fff2"></div><div class="vquote" data-self-id="60bef4f71322d7144a62fff2"></div></div></div></div></div></div><div class="vcard" id="60b2f3f7dd770475f26b7928"><img class="vimg" src="./自动健康打卡 _ 亦往沧劫_files/d41d8cd98f00b204e9800998ecf8427e.png"><div class="vh"><div class="vhead"><span class="vnick">Anonymous</span> <span class="vsys">Chrome 80.0.3987.163</span> <span class="vsys">Windows 10.0</span></div><div class="vmeta"><span class="vtime">2021-05-30</span><span class="vat" data-vm-id="60b2f3f7dd770475f26b7928" data-self-id="60b2f3f7dd770475f26b7928">回复</span></div><div class="vcontent expand" data-expand="查看更多..."><p>021-05-30 10:05:32] 2021-05-30 10:05:32,843 - AutoReport - INFO - 程序启动中…<br>[2021-05-30 10:05:32] 2021-05-30 10:05:32,843 - AutoReport - INFO - sample_user开始登录中…<br>[2021-05-30 10:05:32] 2021-05-30 10:05:32,847 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): ehall.hpu.edu.cn<br>[2021-05-30 10:05:33] 2021-05-30 10:05:33,074 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): uia.hpu.edu.cn<br>[2021-05-30 10:05:33] 2021-05-30 10:05:33,405 - AutoReport - INFO - 验证码获取成功!<br>[2021-05-30 10:05:33] 2021-05-30 10:05:33,407 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): aip.baidubce.com<br>[2021-05-30 10:05:33] 2021-05-30 10:05:33,501 - requests.packages.urllib3.connectionpool - INFO - Starting new HTTPS connection (1): aip.baidubce.com<br>[2021-05-30 10:05:33] 2021-05-30 10:05:33,726 - AutoReport - INFO - 验证码识别成功!<br>[2021-05-30 10:05:34] 2021-05-30 10:05:34,125 - AutoReport - ERROR - 登录失败, 未知错误!<br>[2021-05-30 10:05:34] Traceback (most recent call last):<br>[2021-05-30 10:05:34]   File “main.py”, line 300, in &lt;module&gt;<br>[2021-05-30 10:05:34]     BOT = Bot(‘config.ini’)<br>[2021-05-30 10:05:34]   File “main.py”, line 88, in <strong>init</strong><br>[2021-05-30 10:05:34]     self.login(user)<br>[2021-05-30 10:05:34]   File “main.py”, line 145, in login<br>[2021-05-30 10:05:34]     raise Exception(‘登录失败, 未知错误!’)<br>[2021-05-30 10:05:34] Exception: 登录失败, 未知错误!<br>[2021-05-30 10:05:34] [Pipeline] }<br>[2021-05-30 10:05:34] [Pipeline] // stage<br>[2021-05-30 10:05:34] [Pipeline] }<br>[2021-05-30 10:05:34] [Pipeline] // node<br>[2021-05-30 10:05:34] [Pipeline] End of Pipeline<br>[2021-05-30 10:05:34] ERROR: script returned exit code 1<br>[2021-05-30 10:05:34] Finished: FAILURE</p>
+</div><div class="vreply-wrapper" data-self-id="60b2f3f7dd770475f26b7928"></div><div class="vquote" data-self-id="60b2f3f7dd770475f26b7928"><div class="vcard" id="60b2f4d0dd770475f26b7a18"><img class="vimg" src="./自动健康打卡 _ 亦往沧劫_files/4756cb352ec7f58884fdc0c219ea00dc.jpeg"><div class="vh"><div class="vhead"><a class="vnick" rel="nofollow" href="https://blog.todest.cn/" target="_blank">亦往沧劫</a> <span class="vsys">Quark 5.0.0.178</span> <span class="vsys">Android 11</span></div><div class="vmeta"><span class="vtime">2021-05-30</span><span class="vat" data-vm-id="60b2f3f7dd770475f26b7928" data-self-id="60b2f4d0dd770475f26b7a18">回复</span></div><div class="vcontent" data-expand="查看更多..."><p><a href="https://blog.todest.cn/post/934e7461/#60b2f3f7dd770475f26b7928" target="_blank" rel="nofollow">@Anonymous </a> , 密码是默认密码吗？如果是需要修改密码@！</p>
+</div><div class="vreply-wrapper" data-self-id="60b2f4d0dd770475f26b7a18"></div><div class="vquote" data-self-id="60b2f4d0dd770475f26b7a18"></div></div></div></div></div></div><div class="vcard" id="606fdf4059f9a57bfbc017a8"><img class="vimg" src="./自动健康打卡 _ 亦往沧劫_files/d41d8cd98f00b204e9800998ecf8427e.png"><div class="vh"><div class="vhead"><span class="vnick">Anonymous</span> <span class="vsys">Chrome 89.0.4389.114</span> <span class="vsys">Windows 10.0</span></div><div class="vmeta"><span class="vtime">2021-04-09</span><span class="vat" data-vm-id="606fdf4059f9a57bfbc017a8" data-self-id="606fdf4059f9a57bfbc017a8">回复</span></div><div class="vcontent" data-expand="查看更多..."><p>郭哥，YYDS!!!! <img alt="good" class="vemoji" referrerpolicy="no-referrer" src="./自动健康打卡 _ 亦往沧劫_files/2018new_good_org.png"> <img alt="good" class="vemoji" referrerpolicy="no-referrer" src="./自动健康打卡 _ 亦往沧劫_files/2018new_good_org.png"> <img alt="good" class="vemoji" referrerpolicy="no-referrer" src="./自动健康打卡 _ 亦往沧劫_files/2018new_good_org.png"></p>
+</div><div class="vreply-wrapper" data-self-id="606fdf4059f9a57bfbc017a8"></div><div class="vquote" data-self-id="606fdf4059f9a57bfbc017a8"></div></div></div><div class="vcard" id="600959660ac9aa761f2bc9d0"><img class="vimg" src="./自动健康打卡 _ 亦往沧劫_files/d41d8cd98f00b204e9800998ecf8427e.png"><div class="vh"><div class="vhead"><span class="vnick">Anonymous</span> <span class="vsys">Edge 88.0.705.49</span> <span class="vsys">Windows 10.0</span></div><div class="vmeta"><span class="vtime">2021-01-21</span><span class="vat" data-vm-id="600959660ac9aa761f2bc9d0" data-self-id="600959660ac9aa761f2bc9d0">回复</span></div><div class="vcontent" data-expand="查看更多..."><p>部署成功，老哥牛逼！ <img alt="good" class="vemoji" referrerpolicy="no-referrer" src="./自动健康打卡 _ 亦往沧劫_files/2018new_good_org.png"></p>
+</div><div class="vreply-wrapper" data-self-id="600959660ac9aa761f2bc9d0"></div><div class="vquote" data-self-id="600959660ac9aa761f2bc9d0"></div></div></div><div class="vcard" id="60043dfc3a9b5f27cd714797"><img class="vimg" src="./自动健康打卡 _ 亦往沧劫_files/d41d8cd98f00b204e9800998ecf8427e.png"><div class="vh"><div class="vhead"><span class="vnick">Anonymous</span> <span class="vsys">Edge 87.0.664.75</span> <span class="vsys">Windows 10.0</span></div><div class="vmeta"><span class="vtime">2021-01-17</span><span class="vat" data-vm-id="60043dfc3a9b5f27cd714797" data-self-id="60043dfc3a9b5f27cd714797">回复</span></div><div class="vcontent" data-expand="查看更多..."><p>手哥大神求带</p>
+</div><div class="vreply-wrapper" data-self-id="60043dfc3a9b5f27cd714797"></div><div class="vquote" data-self-id="60043dfc3a9b5f27cd714797"></div></div></div></div><div class="vload-bottom text-center" style="display: none;"><i class="vspinner" style="width:30px;height:30px;"></i></div><div class="vempty" style="display:none;"></div><div class="vpage txt-center" style="display: block;"><button type="button" class="vmore vbtn">加载更多...</button></div><div class="vpower txt-right">Powered By <a href="https://valine.js.org/" target="_blank">Valine</a><br>v1.4.14</div></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar" style="margin-top: 541px;">
+    <div class="sidebar-inner affix" style="opacity: 1; transform: initial;">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc sidebar-nav-active">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel sidebar-panel-active" style="max-height: 916px; opacity: 1;">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="https://blog.todest.cn/post/934e7461/#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="https://blog.todest.cn/post/934e7461/#%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">完整代码</span></a></li><li class="nav-item nav-level-1 active"><a class="nav-link" href="https://blog.todest.cn/post/934e7461/#Coding"><span class="nav-number">3.</span> <span class="nav-text">Coding</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="https://blog.todest.cn/post/934e7461/#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="nav-number">3.1.</span> <span class="nav-text">创建项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="https://blog.todest.cn/post/934e7461/#%E5%88%9B%E5%BB%BA%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93"><span class="nav-number">3.2.</span> <span class="nav-text">创建代码仓库</span></a></li><li class="nav-item nav-level-2 active active-current"><a class="nav-link" href="https://blog.todest.cn/post/934e7461/#%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6"><span class="nav-number">3.3.</span> <span class="nav-text">上传文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="https://blog.todest.cn/post/934e7461/#%E5%88%9B%E5%BB%BA%E6%9E%84%E5%BB%BA%E8%AE%A1%E5%88%92"><span class="nav-number">3.4.</span> <span class="nav-text">创建构建计划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="https://blog.todest.cn/post/934e7461/#%E8%AE%BE%E7%BD%AE%E5%AE%9A%E6%97%B6%E8%A7%A6%E5%8F%91"><span class="nav-number">3.5.</span> <span class="nav-text">设置定时触发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="https://blog.todest.cn/post/934e7461/#%E5%AE%8C%E6%88%90%E5%B9%B6%E6%9F%A5%E7%9C%8B"><span class="nav-number">3.6.</span> <span class="nav-text">完成并查看</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="https://blog.todest.cn/post/934e7461/#%E9%82%AE%E4%BB%B6%E9%80%9A%E7%9F%A5"><span class="nav-number">3.7.</span> <span class="nav-text">邮件通知</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="https://blog.todest.cn/post/934e7461/#%E6%9C%80%E8%BF%91%E6%9B%B4%E6%94%B9"><span class="nav-number">4.</span> <span class="nav-text">最近更改</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel" style="opacity: 0; max-height: 916px;">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="亦往沧劫" src="./自动健康打卡 _ 亦往沧劫_files/4756cb352ec7f58884fdc0c219ea00dc(1).jpeg">
+  <p class="site-author-name" itemprop="name">亦往沧劫</p>
+  <div class="site-description" itemprop="description">我不知道你在这儿<br>知道的话我会常来看你的</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="https://blog.todest.cn/archives/">
+        
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="https://blog.todest.cn/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="https://blog.todest.cn/tags/">
+          
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/todest" title="GitHub → https://github.com/todest" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:todest@qq.com" title="E-Mail → mailto:todest@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=1123792492" title="QQ → http://wpa.qq.com/msgrd?v=3&amp;uin=1123792492" rel="noopener" target="_blank"><i class="fa fa-fw fa-qq"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/ultrasurreal" title="Facebook → https://www.facebook.com/ultrasurreal" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/11422695" title="StackOverflow → https://stackoverflow.com/users/11422695" rel="noopener" target="_blank"><i class="fa fa-fw fa-stack-overflow"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/yonghangguo/" title="Instagram → https://www.instagram.com/yonghangguo/" rel="noopener" target="_blank"><i class="fa fa-fw fa-instagram"></i></a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://boiltask.com/" title="https://boiltask.com" rel="noopener" target="_blank">BoilTask</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.cnblogs.com/codancer" title="https://www.cnblogs.com/codancer" rel="noopener" target="_blank">Codancer</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://colsrch.cn/" title="https://colsrch.cn" rel="noopener" target="_blank">Colsrch</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.wzy1999.wang/" title="https://blog.wzy1999.wang" rel="noopener" target="_blank">执念</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://dicer.fun/" title="https://dicer.fun" rel="noopener" target="_blank">Dicer</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://anyway521.gitee.io/" title="https://anyway521.gitee.io" rel="noopener" target="_blank">Des_tiny</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://cndrew.cn/" title="https://cndrew.cn" rel="noopener" target="_blank">Drew</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://rookie6.github.io/" title="https://rookie6.github.io" rel="noopener" target="_blank">rookie6</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.lzphi.cn/" title="https://www.lzphi.cn" rel="noopener" target="_blank">LuoZui</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://angelni.github.io/" title="https://angelni.github.io" rel="noopener" target="_blank">Sky</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blogzhy.cn/" title="https://blogzhy.cn" rel="noopener" target="_blank">一Wa哇一天</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://jinqimu.xyz/" title="https://jinqimu.xyz" rel="noopener" target="_blank">Jinqimu</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://fuzhiyuan.github.io/" title="https://fuzhiyuan.github.io" rel="noopener" target="_blank">FuZhiyuan</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://pipakacha.com/" title="https://pipakacha.com" rel="noopener" target="_blank">RuiRui</a>
+        </li>
+    </ul>
+  </div>
+<script src="./自动健康打卡 _ 亦往沧劫_files/saved_resource" defer=""></script>
+<style>
+@media all and (orientation : portrait) {
+	#hitokoto{
+		padding-left: 50px;
+		padding-right: 50px;
+	}
+}
+</style>
+
+
+
+
+
+<script type="text/javascript" src="./自动健康打卡 _ 亦往沧劫_files/clicklove.js.下载"></script>
+
+
+
+
+
+<script type="text/javascript" src="./自动健康打卡 _ 亦往沧劫_files/crash_cheat.js.下载"></script>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  © 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">亦往沧劫</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">143k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:10</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> &amp; <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async="" src="./自动健康打卡 _ 亦往沧劫_files/busuanzi.pure.mini.js.下载"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: inline;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv">9642</span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: inline;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv">20354</span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="./自动健康打卡 _ 亦往沧劫_files/anime.min.js.下载"></script>
+  <script src="./自动健康打卡 _ 亦往沧劫_files/jquery.min.js.下载"></script>
+  <script src="./自动健康打卡 _ 亦往沧劫_files/jquery.fancybox.min.js.下载"></script>
+  <script src="./自动健康打卡 _ 亦往沧劫_files/lozad.min.js.下载"></script>
+  <script src="./自动健康打卡 _ 亦往沧劫_files/velocity.min.js.下载"></script>
+  <script src="./自动健康打卡 _ 亦往沧劫_files/velocity.ui.min.js.下载"></script>
+
+<script src="./自动健康打卡 _ 亦往沧劫_files/utils.js.下载"></script>
+
+<script src="./自动健康打卡 _ 亦往沧劫_files/motion.js.下载"></script>
+
+
+<script src="./自动健康打卡 _ 亦往沧劫_files/pisces.js.下载"></script>
+
+
+<script src="./自动健康打卡 _ 亦往沧劫_files/next-boot.js.下载"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="./自动健康打卡 _ 亦往沧劫_files/local-search.js.下载"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'NNOFYEbCjmMJUqInK2zEpetd-gzGzoHsz',
+      appKey     : 'Q474k3XvUzlPbRG5bOyNCxVt',
+      placeholder: "写点什么？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+
+</body></html>
