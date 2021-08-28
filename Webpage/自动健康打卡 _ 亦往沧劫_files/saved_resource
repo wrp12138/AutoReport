@@ -1,0 +1,1 @@
+(function hitokoto(){var hitokoto="祈愿万家灯火熨烫过脉络，刀山与火海多深刻，都陪你渡过。";var dom=document.querySelector('#hitokoto');Array.isArray(dom)?dom[0].innerText=hitokoto:dom.innerText=hitokoto;})()
