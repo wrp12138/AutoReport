@@ -297,18 +297,10 @@ class Bot:
         update = round(time.time()) - last_time
         if update > 5:
             self.logger.error('上次打卡完成于%ss前,打卡可能未成功!', update)
-            if Times<5:
-                Times+=1
-                self.logger.info('打卡已失败%d', Times)
-                BOT = Bot('config.ini')
-            elif Times>=5:
-                self.logger.info('打卡已失败%d', Times+1)
-                raise Exception('打卡失败次数过多')
+            raise Exception('打卡失败次数过多')
         else:
             self.logger.info('打卡完成于%s', local_time)
-            self.logger.info('打卡失败%d次，于第%d次打卡成功', Times,Times+1)
 
 
 if __name__ == '__main__':
-    Times=0
     BOT = Bot('config.ini')
