@@ -201,8 +201,8 @@ class Bot:
         account = ast.literal_eval(user[1])
         fixdata = {
             'fieldAN': '获取位置信息',
-            'fieldDWAN': '河南省焦作市解放区人民路',
-            'fieldGRDW': '113.23563548681861,35.215611703666454,17',
+            'fieldDWAN': account[7],
+            'fieldGRDW': account[5] + ',' + account[6] + ',' + '17',
             'fieldGRDW_Name': '自动获取',
             'fieldSQjhr': account[2],
             'fieldSQjhrlxdh': account[3],
